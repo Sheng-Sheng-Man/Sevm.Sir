@@ -16,7 +16,7 @@ SEVM：Script Execution Virtual Machine <https://github.com/inmount/SEVM>
 
 用来申请内存及定义名称。
 
-支持的类型包括：any, number, string, list, native_object, native_function
+支持的类型包括：any, number, string, list, object, native_object, native_function
 
 例如：
 
@@ -26,8 +26,10 @@ define
     number b, 2
     number c, 0
     string $0, "a+b的和是"
-    any str,
-    list $1 
+    any str
+    list $1
+    string $2, "print"
+    list $2
 end define
 ···
 
@@ -46,6 +48,33 @@ code main
     mov #1, 0
     push [$0]
     push [c]
-    join str, $1
+    push 0
+    comb str, $1
+    mov #0, [$2]
+    push [str]
+    push 0
+    call [], $2
 end code
+···
+
+### 二、数据指令
+
+#### 2.1 传送指令 mov
+
+用来传值。
+
+例如：
+
+···
+mov #0, 0
+···
+
+#### 2.2 整合指令 comb
+
+用来将字符串列表整合为一个字符串。
+
+例如：
+
+···
+comb str, $1
 ···
