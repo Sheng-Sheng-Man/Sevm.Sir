@@ -20,7 +20,7 @@ SEVM：Script Execution Virtual Machine <https://github.com/inmount/SEVM>
 
 例如：
 
-···
+```
 define
     number a, 1
     number b, 2
@@ -31,7 +31,7 @@ define
     string $2, "print"
     list $2
 end define
-···
+```
 
 #### 1.2 代码段定义code及end code
 
@@ -39,7 +39,7 @@ end define
 
 例如：
 
-···
+```
 code main
     mov #0, a
     add #0, b
@@ -55,7 +55,7 @@ code main
     push 0
     call [], $2
 end code
-···
+```
 
 ### 二、数据指令
 
@@ -65,9 +65,9 @@ end code
 
 例如：
 
-···
+```
 mov #0, 0
-···
+```
 
 #### 2.2 整合指令 comb
 
@@ -75,6 +75,6 @@ mov #0, 0
 
 例如：
 
-···
+```
 comb str, $1
-···
+```
