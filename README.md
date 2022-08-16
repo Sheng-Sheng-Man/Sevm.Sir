@@ -16,7 +16,7 @@ SEVM：Script Execution Virtual Machine <https://github.com/inmount/SEVM>
 
 * ; 语句结束符，后面的字符不计入代码
 * " 字符串定义符号
-* \\ 字符串中的转义符，\"为双引号，\r为回车符，\n为换行符
+* \\ 字符串中的转义符，\\"为双引号，\\r为回车符，\\n为换行符
 * @ 标签定义
 * ， 命令参数分隔符
 * \# 寄存器定义
