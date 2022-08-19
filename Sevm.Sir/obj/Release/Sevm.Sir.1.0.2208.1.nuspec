@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Sevm.Sir</id>
+    <version>1.0.2208.1</version>
+    <authors>Sevm.Sir</authors>
+    <icon>script.png</icon>
+    <readme>README.md</readme>
+    <description>一种服务于脚本执行的可二进制化指令语言</description>
+    <dependencies>
+      <group targetFramework=".NETStandard2.1" />
+    </dependencies>
+    <contentFiles>
+      <files include="any/netstandard2.1/script.ico" buildAction="Content" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="X:\Projects.GitHub\inmount\SIR\Sevm.Sir\bin\Release\netstandard2.1\Sevm.Sir.dll" target="lib\netstandard2.1\Sevm.Sir.dll" />
+    <file src="X:\Projects.GitHub\inmount\SIR\Sevm.Sir\bin\Release\netstandard2.1\Sevm.Sir.xml" target="lib\netstandard2.1\Sevm.Sir.xml" />
+    <file src="X:\Projects.GitHub\inmount\SIR\Sevm.Sir\script.ico" target="content\script.ico" />
+    <file src="X:\Projects.GitHub\inmount\SIR\Sevm.Sir\script.ico" target="contentFiles\any\netstandard2.1\script.ico" />
+    <file src="X:\Projects.GitHub\inmount\SIR\README.md" target="\README.md" />
+    <file src="X:\Projects.GitHub\inmount\SIR\script.png" target="\script.png" />
+  </files>
+</package>
