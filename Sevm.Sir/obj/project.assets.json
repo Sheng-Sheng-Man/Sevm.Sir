@@ -1,62 +1,39 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {
-      "Sevm.Sir/1.0.2208.1": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
-        "compile": {
-          "bin/placeholder/Sevm.Sir.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Sevm.Sir.dll": {}
-        }
-      }
-    }
+    ".NETStandard,Version=v2.1": {}
   },
-  "libraries": {
-    "Sevm.Sir/1.0.2208.1": {
-      "type": "project",
-      "path": "../Sevm.Sir/Sevm.Sir.csproj",
-      "msbuildProject": "../Sevm.Sir/Sevm.Sir.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net6.0": [
-      "Sevm.Sir >= 1.0.2208.1"
-    ]
+    ".NETStandard,Version=v2.1": []
   },
   "packageFolders": {
     "C:\\Users\\inmou\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "1.0.2208.1",
     "restore": {
-      "projectUniqueName": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir.Test\\Sevm.Sir.Test.csproj",
-      "projectName": "Sevm.Sir.Test",
-      "projectPath": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir.Test\\Sevm.Sir.Test.csproj",
+      "projectUniqueName": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\Sevm.Sir.csproj",
+      "projectName": "Sevm.Sir",
+      "projectPath": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\Sevm.Sir.csproj",
       "packagesPath": "C:\\Users\\inmou\\.nuget\\packages\\",
-      "outputPath": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir.Test\\obj\\",
+      "outputPath": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\inmou\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0"
+        "netstandard2.1"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
-          "projectReferences": {
-            "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\Sevm.Sir.csproj": {
-              "projectPath": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\Sevm.Sir.csproj"
-            }
-          }
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -66,8 +43,8 @@
       }
     },
     "frameworks": {
-      "net6.0": {
-        "targetAlias": "net6.0",
+      "netstandard2.1": {
+        "targetAlias": "netstandard2.1",
         "imports": [
           "net461",
           "net462",
@@ -80,7 +57,7 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
-          "Microsoft.NETCore.App": {
+          "NETStandard.Library": {
             "privateAssets": "all"
           }
         },
