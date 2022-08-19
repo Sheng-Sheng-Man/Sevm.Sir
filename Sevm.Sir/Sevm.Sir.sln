@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sevm.Sir", "Sevm.Sir.csproj", "{886E9B3A-35DD-47EE-8916-32FADF657401}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sevm.Sir.Test", "..\Sevm.Sir.Test\Sevm.Sir.Test.csproj", "{14F6F321-F49B-46EC-A41B-28C46E50655F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{886E9B3A-35DD-47EE-8916-32FADF657401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{886E9B3A-35DD-47EE-8916-32FADF657401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{886E9B3A-35DD-47EE-8916-32FADF657401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{886E9B3A-35DD-47EE-8916-32FADF657401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14F6F321-F49B-46EC-A41B-28C46E50655F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14F6F321-F49B-46EC-A41B-28C46E50655F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14F6F321-F49B-46EC-A41B-28C46E50655F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14F6F321-F49B-46EC-A41B-28C46E50655F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92F5BEA8-6F18-4D1F-93F0-30A1BA76D555}
+	EndGlobalSection
+EndGlobal

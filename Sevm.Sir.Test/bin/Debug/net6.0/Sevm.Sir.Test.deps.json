@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Sevm.Sir.Test/1.0.0": {
+        "dependencies": {
+          "Sevm.Sir": "1.0.2208.1"
+        },
+        "runtime": {
+          "Sevm.Sir.Test.dll": {}
+        }
+      },
+      "Sevm.Sir/1.0.2208.1": {
+        "runtime": {
+          "Sevm.Sir.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Sevm.Sir.Test/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Sevm.Sir/1.0.2208.1": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
