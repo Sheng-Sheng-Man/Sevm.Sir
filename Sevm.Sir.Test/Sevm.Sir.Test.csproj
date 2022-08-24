@@ -11,4 +11,13 @@
     <ProjectReference Include="..\Sevm.Sir\Sevm.Sir.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="hello2.sc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="hello3.sbc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -39,7 +39,7 @@ namespace Sevm.Sir {
         /// <summary>
         /// 获取小数部分指令
         /// </summary>
-        Flt = 0x0206,
+        Frac = 0x0206,
 
         /// <summary>
         /// 列表指令
@@ -57,10 +57,6 @@ namespace Sevm.Sir {
         /// 对象指令
         /// </summary>
         Obj = 0x0304,
-        /// <summary>
-        /// 对象键指令
-        /// </summary>
-        Keys = 0x0305,
 
         /// <summary>
         /// 加法指令
@@ -148,7 +144,7 @@ namespace Sevm.Sir {
     /// <summary>
     /// 指令类型
     /// </summary>
-    public enum SirCodeParamTypes {
+    public enum SirExpressionTypes {
         /// <summary>
         /// 空
         /// </summary>
@@ -184,21 +180,25 @@ namespace Sevm.Sir {
         /// </summary>
         None = 0x00,
         /// <summary>
+        /// 引入
+        /// </summary>
+        Import = 0x01,
+        /// <summary>
         /// 数据
         /// </summary>
-        Data = 0x01,
+        Data = 0x02,
         /// <summary>
         /// 定义
         /// </summary>
-        Define = 0x02,
+        Define = 0x03,
         /// <summary>
         /// 函数
         /// </summary>
-        Func = 0x03,
+        Func = 0x04,
         /// <summary>
         /// 代码
         /// </summary>
-        Code = 0x04,
+        Code = 0x05,
     }
 
     /// <summary>
@@ -213,5 +213,19 @@ namespace Sevm.Sir {
         /// 结束
         /// </summary>
         Finish = 0x01,
+    }
+
+    /// <summary>
+    /// 引入类型
+    /// </summary>
+    public enum SirImportTypes {
+        /// <summary>
+        /// 引入内置函数
+        /// </summary>
+        Use = 0x01,
+        /// <summary>
+        /// 引入外部程序
+        /// </summary>
+        Lib = 0x02,
     }
 }

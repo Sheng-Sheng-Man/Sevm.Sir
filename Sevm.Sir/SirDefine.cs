@@ -46,8 +46,9 @@ namespace Sevm.Sir {
             List<byte> ls = new List<byte>();
             // 生成长度
             ls.AddRange(Parser.GetIntegerBytes(this.Index));
-            ls.AddRange(Parser.GetIntegerBytes(this.Name.Length));
-            ls.AddRange(System.Text.Encoding.UTF8.GetBytes(this.Name));
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(this.Name);
+            ls.AddRange(Parser.GetIntegerBytes(bytes.Length));
+            ls.AddRange(bytes);
             // 添加长度
             ls.AddRange(Parser.GetIntegerBytes(this.IntPtr));
             return ls.ToArray();

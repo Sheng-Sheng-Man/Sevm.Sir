@@ -53,12 +53,13 @@ namespace Sevm.Sir {
                 case "new": return SirCodeInstructionTypes.New;
                 case "ptr": return SirCodeInstructionTypes.Ptr;
                 case "lea": return SirCodeInstructionTypes.Lea;
+                case "int": return SirCodeInstructionTypes.Int;
+                case "frac": return SirCodeInstructionTypes.Frac;
                 // 三、类型操作指令
                 case "list": return SirCodeInstructionTypes.List;
                 case "join": return SirCodeInstructionTypes.Join;
                 case "cnt": return SirCodeInstructionTypes.Cnt;
                 case "Obj": return SirCodeInstructionTypes.Obj;
-                case "keys": return SirCodeInstructionTypes.Keys;
                 // 四、运算操作指令
                 case "add": return SirCodeInstructionTypes.Add;
                 case "sub": return SirCodeInstructionTypes.Sub;
@@ -88,22 +89,22 @@ namespace Sevm.Sir {
         /// <param name="param"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static void FillSirCodeParam(SirCodeParam param, string name) {
+        public static void FillSirCodeParam(SirExpression param, string name) {
             if (name.StartsWith("[") && name.EndsWith("]")) {
-                param.ParamType = SirCodeParamTypes.IntPtr;
-                param.Value = int.Parse(name.Substring(1, name.Length - 2));
+                param.Type = SirExpressionTypes.IntPtr;
+                param.Content = int.Parse(name.Substring(1, name.Length - 2));
             } else if (name.StartsWith("@")) {
-                param.ParamType = SirCodeParamTypes.Label;
-                param.Value = int.Parse(name.Substring(1));
+                param.Type = SirExpressionTypes.Label;
+                param.Content = int.Parse(name.Substring(1));
             } else if (name.StartsWith("#")) {
-                param.ParamType = SirCodeParamTypes.Storage;
-                param.Value = int.Parse(name.Substring(1));
+                param.Type = SirExpressionTypes.Storage;
+                param.Content = int.Parse(name.Substring(1));
             } else if (name.StartsWith("$")) {
-                param.ParamType = SirCodeParamTypes.Variable;
-                param.Value = int.Parse(name.Substring(1));
+                param.Type = SirExpressionTypes.Variable;
+                param.Content = int.Parse(name.Substring(1));
             } else {
-                param.ParamType = SirCodeParamTypes.Value;
-                param.Value = int.Parse(name);
+                param.Type = SirExpressionTypes.Value;
+                param.Content = int.Parse(name);
             }
         }
 
@@ -133,6 +134,10 @@ namespace Sevm.Sir {
                         if (ls.Count > 0) {
                             string name = ls[0].ToLower();
                             switch (name) {
+                                case "import":
+                                    if (tp != SirParserTypes.None) throw new Exception($"意外的'{name}'指令");
+                                    tp = SirParserTypes.Import;
+                                    break;
                                 case "code":
                                     if (tp != SirParserTypes.None) throw new Exception($"意外的'{name}'指令");
                                     tp = SirParserTypes.Code;
@@ -157,10 +162,25 @@ namespace Sevm.Sir {
                                     if (tp == SirParserTypes.Define && sign == "define") { tp = SirParserTypes.None; break; }
                                     if (tp == SirParserTypes.Func && sign == "func") { tp = SirParserTypes.None; break; }
                                     if (tp == SirParserTypes.Code && sign == "code") { tp = SirParserTypes.None; break; }
+                                    if (tp == SirParserTypes.Import && sign == "import") { tp = SirParserTypes.None; break; }
                                     throw new Exception($"意外的'{name}'指令");
                                 default:
                                     // 判断异常
                                     switch (tp) {
+                                        case SirParserTypes.Import:
+                                            if (ls.Count < 2) throw new Exception($"意外的'{name}'指令");
+                                            string content = ls[1];
+                                            if (content.Length < 2) throw new Exception($"不符合规范的 {content} 字符串");
+                                            if (!content.StartsWith("\"")) throw new Exception($"不符合规范的 {content} 字符串");
+                                            if (!content.EndsWith("\"")) throw new Exception($"不符合规范的 {content} 字符串");
+                                            if (name == "use") {
+                                                script.Imports.Add(SirImportTypes.Use, content.Substring(1, content.Length - 2));
+                                            } else if (name == "lib") {
+                                                script.Imports.Add(SirImportTypes.Lib, content.Substring(1, content.Length - 2));
+                                            } else {
+                                                throw new Exception($"意外的'{name}'指令");
+                                            }
+                                            break;
                                         case SirParserTypes.Data:
                                             if (ls.Count < 3) throw new Exception($"意外的'{name}'指令");
                                             if (!name.StartsWith("[")) throw new Exception($"意外的'{name}'指令");
@@ -197,19 +217,19 @@ namespace Sevm.Sir {
                                         case SirParserTypes.Code:
                                             if (name.StartsWith("@")) {
                                                 SirCodeInstructionTypes instructionType = SirCodeInstructionTypes.Label;
-                                                SirCodeParam target = new SirCodeParam();
+                                                SirExpression target = new SirExpression();
                                                 FillSirCodeParam(target, name);
                                                 script.Codes.Add(instructionType, target);
                                             } else {
                                                 SirCodeInstructionTypes instructionType = GetInstructionType(name);
-                                                SirCodeParam target = new SirCodeParam();
-                                                SirCodeParam source = new SirCodeParam();
+                                                SirExpression target = new SirExpression();
+                                                SirExpression source = new SirExpression();
                                                 if (ls.Count < 2) {
-                                                    target.ParamType = SirCodeParamTypes.None;
-                                                    source.ParamType = SirCodeParamTypes.None;
+                                                    target.Type = SirExpressionTypes.None;
+                                                    source.Type = SirExpressionTypes.None;
                                                 } else if (ls.Count < 3) {
                                                     FillSirCodeParam(target, ls[1]);
-                                                    source.ParamType = SirCodeParamTypes.None;
+                                                    source.Type = SirExpressionTypes.None;
                                                 } else {
                                                     FillSirCodeParam(target, ls[1]);
                                                     FillSirCodeParam(source, ls[2]);
@@ -339,8 +359,10 @@ namespace Sevm.Sir {
         public static SirScript GetScript(byte[] sir) {
             SirScript script = new SirScript();
             if (sir.Length <= 5) throw new Exception("不是标准的sbc文件");
-            if (System.Text.Encoding.ASCII.GetString(sir, 0, 5) != "SIRBC") throw new Exception("不是标准的sbc文件");
-            int dataAddr = 5;
+            if (System.Text.Encoding.ASCII.GetString(sir, 0, 8) != "SIRBC1.0") throw new Exception("不是标准的sbc文件");
+            int importAddr = 8;
+            int importSize = 0;
+            int dataAddr = 0;
             int dataSize = 0;
             int defineAddr = 0;
             int defineSize = 0;
@@ -348,6 +370,8 @@ namespace Sevm.Sir {
             int funcSize = 0;
             int codeAddr = 0;
             int codeSize = 0;
+            importSize = GetInteger(new Span<byte>(sir, importAddr, 4));
+            dataAddr = importAddr + importSize + 4;
             dataSize = GetInteger(new Span<byte>(sir, dataAddr, 4));
             defineAddr = dataAddr + dataSize + 4;
             defineSize = GetInteger(new Span<byte>(sir, defineAddr, 4));
@@ -356,11 +380,24 @@ namespace Sevm.Sir {
             codeAddr = funcAddr + funcSize + 4;
             codeSize = GetInteger(new Span<byte>(sir, codeAddr, 4));
             // 输出调试
-            //Console.WriteLine($"dataAddr: {dataAddr}, dataSize: {dataSize}, defineAddr: {defineAddr}, defineSize: {defineSize}, funcAddr: {funcAddr}, funcSize: {funcSize}, codeAddr: {codeAddr}, codeSize: {codeSize}");
-            // 加载所有数据
-            int addr = dataAddr + 4;
+            //Console.WriteLine($"importAddr: {importAddr}, importSize: {importSize}, dataAddr: {dataAddr}, dataSize: {dataSize}, defineAddr: {defineAddr}, defineSize: {defineSize}, funcAddr: {funcAddr}, funcSize: {funcSize}, codeAddr: {codeAddr}, codeSize: {codeSize}, all: {sir.Length}");
+            if (codeAddr + 4 + codeSize != sir.Length) throw new Exception("sbc文件已损坏");
+            // 加载所有引入
+            int addr = importAddr + 4;
             int offset = 0;
-            do {
+            while (offset < importSize) {
+                SirImportTypes importType = (SirImportTypes)sir[addr + offset];
+                offset++;
+                int contentLen = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                offset += 4;
+                string content = System.Text.Encoding.UTF8.GetString(new Span<byte>(sir, addr + offset, contentLen));
+                offset += contentLen;
+                script.Imports.Add(importType, content);
+            }
+            // 加载所有数据
+            addr = dataAddr + 4;
+            offset = 0;
+            while (offset < dataSize) {
                 int ptr = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
                 SirDataTypes dataType = (SirDataTypes)sir[addr + offset];
@@ -369,11 +406,11 @@ namespace Sevm.Sir {
                 offset += 4;
                 script.Datas.Add(ptr, dataType, new Span<byte>(sir, addr + offset, dataLen));
                 offset += dataLen;
-            } while (offset < dataSize);
+            }
             // 加载所有定义
             addr = defineAddr + 4;
             offset = 0;
-            do {
+            while (offset < defineSize) {
                 int index = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
                 int nameLen = GetInteger(new Span<byte>(sir, addr + offset, 4));
@@ -383,11 +420,11 @@ namespace Sevm.Sir {
                 int ptr = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
                 script.Defines.Add(index, name, ptr);
-            } while (offset < defineSize);
+            }
             // 加载所有函数
             addr = funcAddr + 4;
             offset = 0;
-            do {
+            while (offset < funcSize) {
                 int index = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
                 int nameLen = GetInteger(new Span<byte>(sir, addr + offset, 4));
@@ -395,23 +432,23 @@ namespace Sevm.Sir {
                 string name = System.Text.Encoding.UTF8.GetString(new Span<byte>(sir, addr + offset, nameLen));
                 offset += nameLen;
                 script.Funcs.Add(index, name);
-            } while (offset < funcSize);
+            }
             // 加载所有指令
             addr = codeAddr + 4;
             offset = 0;
-            do {
+            while (offset < codeSize) {
                 SirCodeInstructionTypes ins = (SirCodeInstructionTypes)GetInteger(new Span<byte>(sir, addr + offset, 2));
                 offset += 2;
-                SirCodeParamTypes targetType = (SirCodeParamTypes)sir[addr + offset];
+                SirExpressionTypes targetType = (SirExpressionTypes)sir[addr + offset];
                 offset++;
                 int targetValue = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
-                SirCodeParamTypes sourceType = (SirCodeParamTypes)sir[addr + offset];
+                SirExpressionTypes sourceType = (SirExpressionTypes)sir[addr + offset];
                 offset++;
                 int sourceValue = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
                 script.Codes.Add(ins, targetType, targetValue, sourceType, sourceValue);
-            } while (offset < codeSize);
+            }
             return script;
         }
 

@@ -16,12 +16,12 @@ namespace Sevm.Sir {
         /// <summary>
         /// 获取或设置目标参数
         /// </summary>
-        public SirCodeParam Target { get; set; }
+        public SirExpression Target { get; set; }
 
         /// <summary>
         /// 获取或设置源参数
         /// </summary>
-        public SirCodeParam Source { get; set; }
+        public SirExpression Source { get; set; }
 
         /// <summary>
         /// 获取字符串表示形式
@@ -35,7 +35,7 @@ namespace Sevm.Sir {
                 sb.Append(' ');
             }
             sb.Append(this.Target.ToString());
-            if (this.Source.ParamType != SirCodeParamTypes.None) {
+            if (this.Source.Type != SirExpressionTypes.None) {
                 sb.Append(", ");
                 sb.Append(this.Source.ToString());
             }

@@ -15,7 +15,7 @@ namespace Sevm.Sir {
         /// <param name="instruction"></param>
         /// <param name="target"></param>
         /// <param name="source"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirCodeParam target, SirCodeParam source) {
+        public void Add(SirCodeInstructionTypes instruction, SirExpression target, SirExpression source) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Target = target,
@@ -28,11 +28,11 @@ namespace Sevm.Sir {
         /// </summary>
         /// <param name="instruction"></param>
         /// <param name="target"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirCodeParam target) {
+        public void Add(SirCodeInstructionTypes instruction, SirExpression target) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Target = target,
-                Source = new SirCodeParam() { ParamType = SirCodeParamTypes.None, Value = 0 }
+                Source = SirExpression.None, // { ParamType = SirExpressionTypes.None, Value = 0 }
             });
         }
 
@@ -44,8 +44,8 @@ namespace Sevm.Sir {
         public void AddToIntPtr(SirCodeInstructionTypes instruction, int target) {
             this.Add(new SirCode() {
                 Instruction = instruction,
-                Target = new SirCodeParam() { ParamType = SirCodeParamTypes.IntPtr, Value = target },
-                Source = new SirCodeParam() { ParamType = SirCodeParamTypes.None, Value = 0 }
+                Target = SirExpression.IntPtr(target),//{ ParamType = SirExpressionTypes.IntPtr, Value = target },
+                Source = SirExpression.None, // { ParamType = SirExpressionTypes.None, Value = 0 }
             });
         }
 
@@ -55,11 +55,11 @@ namespace Sevm.Sir {
         /// <param name="instruction"></param>
         /// <param name="targetType"></param>
         /// <param name="target"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirCodeParamTypes targetType, int target) {
+        public void Add(SirCodeInstructionTypes instruction, SirExpressionTypes targetType, int target) {
             this.Add(new SirCode() {
                 Instruction = instruction,
-                Target = new SirCodeParam() { ParamType = targetType, Value = target },
-                Source = new SirCodeParam() { ParamType = SirCodeParamTypes.None, Value = 0 }
+                Target = new SirExpression() { Type = targetType, Content = target },
+                Source = SirExpression.None, //  { Type = SirExpressionTypes.None, Content = 0 }
             });
         }
 
@@ -71,11 +71,11 @@ namespace Sevm.Sir {
         /// <param name="target"></param>
         /// <param name="sourceType"></param>
         /// <param name="source"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirCodeParamTypes targetType, int target, SirCodeParamTypes sourceType, int source) {
+        public void Add(SirCodeInstructionTypes instruction, SirExpressionTypes targetType, int target, SirExpressionTypes sourceType, int source) {
             this.Add(new SirCode() {
                 Instruction = instruction,
-                Target = new SirCodeParam() { ParamType = targetType, Value = target },
-                Source = new SirCodeParam() { ParamType = sourceType, Value = source }
+                Target = new SirExpression() { Type = targetType, Content = target },
+                Source = new SirExpression() { Type = sourceType, Content = source }
             });
         }
 

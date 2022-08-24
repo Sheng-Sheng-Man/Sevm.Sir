@@ -9,6 +9,11 @@ namespace Sevm.Sir {
     public class SirScript : IDisposable {
 
         /// <summary>
+        /// 获取引入集合
+        /// </summary>
+        public SirImports Imports { get; private set; }
+
+        /// <summary>
         /// 获取数据集合
         /// </summary>
         public SirDatas Datas { get; private set; }
@@ -32,6 +37,7 @@ namespace Sevm.Sir {
         /// 对象实例化
         /// </summary>
         public SirScript() {
+            this.Imports = new SirImports();
             this.Datas = new SirDatas();
             this.Defines = new SirDefines();
             this.Funcs = new SirFuncs();
@@ -44,6 +50,8 @@ namespace Sevm.Sir {
         /// <returns></returns>
         public new string ToString() {
             StringBuilder sb = new StringBuilder();
+            sb.Append(this.Imports.ToString());
+            sb.Append("\r\n");
             sb.Append(this.Datas.ToString());
             sb.Append("\r\n");
             sb.Append(this.Defines.ToString());
@@ -61,7 +69,8 @@ namespace Sevm.Sir {
         public byte[] ToBytes() {
             List<byte> ls = new List<byte>();
             // 生成集合
-            ls.AddRange(System.Text.Encoding.ASCII.GetBytes("SIRBC"));
+            ls.AddRange(System.Text.Encoding.ASCII.GetBytes("SIRBC1.0"));
+            ls.AddRange(this.Imports.ToBytes());
             ls.AddRange(this.Datas.ToBytes());
             ls.AddRange(this.Defines.ToBytes());
             ls.AddRange(this.Funcs.ToBytes());
@@ -74,6 +83,7 @@ namespace Sevm.Sir {
         /// </summary>
         public void Dispose() {
             //throw new NotImplementedException();
+            this.Imports.Clear();
             this.Datas.Clear();
             this.Defines.Clear();
             this.Funcs.Clear();
