@@ -59,7 +59,7 @@ namespace Sevm.Sir {
                 case "list": return SirCodeInstructionTypes.List;
                 case "join": return SirCodeInstructionTypes.Join;
                 case "cnt": return SirCodeInstructionTypes.Cnt;
-                case "Obj": return SirCodeInstructionTypes.Obj;
+                case "obj": return SirCodeInstructionTypes.Obj;
                 // 四、运算操作指令
                 case "add": return SirCodeInstructionTypes.Add;
                 case "sub": return SirCodeInstructionTypes.Sub;
