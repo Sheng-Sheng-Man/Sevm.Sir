@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.1": {},
     ".NETStandard,Version=v2.1/": {
-      "Sevm.Sir/1.0.2208.7": {
+      "Sevm.Sir/1.0.2208.11": {
         "runtime": {
           "Sevm.Sir.dll": {}
         }
@@ -15,7 +15,7 @@
     }
   },
   "libraries": {
-    "Sevm.Sir/1.0.2208.7": {
+    "Sevm.Sir/1.0.2208.11": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -57,9 +57,16 @@ namespace Sevm.Sir {
                 case "frac": return SirCodeInstructionTypes.Frac;
                 // 三、类型操作指令
                 case "list": return SirCodeInstructionTypes.List;
+                case "ptrl": return SirCodeInstructionTypes.Ptrl;
+                case "leal": return SirCodeInstructionTypes.Leal;
+                case "idx": return SirCodeInstructionTypes.Idx;
                 case "join": return SirCodeInstructionTypes.Join;
                 case "cnt": return SirCodeInstructionTypes.Cnt;
                 case "obj": return SirCodeInstructionTypes.Obj;
+                case "ptrk": return SirCodeInstructionTypes.Ptrk;
+                case "ptrv": return SirCodeInstructionTypes.Ptrv;
+                case "leak": return SirCodeInstructionTypes.Leak;
+                case "leav": return SirCodeInstructionTypes.Leav;
                 // 四、运算操作指令
                 case "add": return SirCodeInstructionTypes.Add;
                 case "sub": return SirCodeInstructionTypes.Sub;
@@ -217,24 +224,32 @@ namespace Sevm.Sir {
                                         case SirParserTypes.Code:
                                             if (name.StartsWith("@")) {
                                                 SirCodeInstructionTypes instructionType = SirCodeInstructionTypes.Label;
-                                                SirExpression target = new SirExpression();
-                                                FillSirCodeParam(target, name);
-                                                script.Codes.Add(instructionType, target);
+                                                SirExpression exp1 = new SirExpression();
+                                                FillSirCodeParam(exp1, name);
+                                                script.Codes.Add(instructionType, exp1);
                                             } else {
                                                 SirCodeInstructionTypes instructionType = GetInstructionType(name);
-                                                SirExpression target = new SirExpression();
-                                                SirExpression source = new SirExpression();
+                                                SirExpression exp1 = new SirExpression();
+                                                SirExpression exp2 = new SirExpression();
+                                                SirExpression exp3 = new SirExpression();
                                                 if (ls.Count < 2) {
-                                                    target.Type = SirExpressionTypes.None;
-                                                    source.Type = SirExpressionTypes.None;
+                                                    exp1.Type = SirExpressionTypes.None;
+                                                    exp2.Type = SirExpressionTypes.None;
+                                                    exp3.Type = SirExpressionTypes.None;
                                                 } else if (ls.Count < 3) {
-                                                    FillSirCodeParam(target, ls[1]);
-                                                    source.Type = SirExpressionTypes.None;
+                                                    FillSirCodeParam(exp1, ls[1]);
+                                                    exp2.Type = SirExpressionTypes.None;
+                                                    exp3.Type = SirExpressionTypes.None;
+                                                } else if (ls.Count < 4) {
+                                                    FillSirCodeParam(exp1, ls[1]);
+                                                    FillSirCodeParam(exp2, ls[2]);
+                                                    exp3.Type = SirExpressionTypes.None;
                                                 } else {
-                                                    FillSirCodeParam(target, ls[1]);
-                                                    FillSirCodeParam(source, ls[2]);
+                                                    FillSirCodeParam(exp1, ls[1]);
+                                                    FillSirCodeParam(exp2, ls[2]);
+                                                    FillSirCodeParam(exp3, ls[3]);
                                                 }
-                                                script.Codes.Add(instructionType, target, source);
+                                                script.Codes.Add(instructionType, exp1, exp2, exp3);
                                             }
                                             break;
                                         default:
@@ -281,7 +296,7 @@ namespace Sevm.Sir {
                         // 字符串中
                         if (inString) { code.Append(chr); break; }
                         // 指令目标和源之间的分隔符
-                        if (ls.Count == 1 && tp == SirParserTypes.Code) {
+                        if ((ls.Count == 1 || ls.Count == 2) && tp == SirParserTypes.Code) {
                             ls.Add(code.ToString());
                             code.Clear();
                             break;
@@ -359,7 +374,8 @@ namespace Sevm.Sir {
         public static SirScript GetScript(byte[] sir) {
             SirScript script = new SirScript();
             if (sir.Length <= 5) throw new Exception("不是标准的sbc文件");
-            if (System.Text.Encoding.ASCII.GetString(sir, 0, 8) != "SIRBC1.0") throw new Exception("不是标准的sbc文件");
+            string sign = System.Text.Encoding.ASCII.GetString(sir, 0, 8);
+            if (sign != "SIRBC1.1") throw new Exception("不是标准的SIRBC1.1文件");
             int importAddr = 8;
             int importSize = 0;
             int dataAddr = 0;
@@ -439,15 +455,19 @@ namespace Sevm.Sir {
             while (offset < codeSize) {
                 SirCodeInstructionTypes ins = (SirCodeInstructionTypes)GetInteger(new Span<byte>(sir, addr + offset, 2));
                 offset += 2;
-                SirExpressionTypes targetType = (SirExpressionTypes)sir[addr + offset];
+                SirExpressionTypes exp1Type = (SirExpressionTypes)sir[addr + offset];
                 offset++;
-                int targetValue = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                int exp1Value = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
-                SirExpressionTypes sourceType = (SirExpressionTypes)sir[addr + offset];
+                SirExpressionTypes exp2Type = (SirExpressionTypes)sir[addr + offset];
                 offset++;
-                int sourceValue = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                int exp2Value = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
-                script.Codes.Add(ins, targetType, targetValue, sourceType, sourceValue);
+                SirExpressionTypes exp3Type = (SirExpressionTypes)sir[addr + offset];
+                offset++;
+                int exp3Value = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                offset += 4;
+                script.Codes.Add(ins, SirExpression.Create(exp1Type, exp1Value), SirExpression.Create(exp2Type, exp2Value), SirExpression.Create(exp3Type, exp3Value));
             }
             return script;
         }

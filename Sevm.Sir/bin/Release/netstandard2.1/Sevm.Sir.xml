@@ -62,14 +62,19 @@
             获取或设置指令类型
             </summary>
         </member>
-        <member name="P:Sevm.Sir.SirCode.Target">
+        <member name="P:Sevm.Sir.SirCode.Exp1">
             <summary>
-            获取或设置目标参数
+            获取或设置第一参数
             </summary>
         </member>
-        <member name="P:Sevm.Sir.SirCode.Source">
+        <member name="P:Sevm.Sir.SirCode.Exp2">
             <summary>
-            获取或设置源参数
+            获取或设置第二参数
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirCode.Exp3">
+            <summary>
+            获取或设置第三参数
             </summary>
         </member>
         <member name="M:Sevm.Sir.SirCode.ToString">
@@ -89,45 +94,35 @@
             代码集合
             </summary>
         </member>
-        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpression,Sevm.Sir.SirExpression)">
+        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes)">
             <summary>
             添加指令
             </summary>
             <param name="instruction"></param>
-            <param name="target"></param>
-            <param name="source"></param>
         </member>
         <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpression)">
             <summary>
             添加指令
             </summary>
             <param name="instruction"></param>
-            <param name="target"></param>
+            <param name="exp1"></param>
         </member>
-        <member name="M:Sevm.Sir.SirCodes.AddToIntPtr(Sevm.Sir.SirCodeInstructionTypes,System.Int32)">
+        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpression,Sevm.Sir.SirExpression)">
             <summary>
             添加指令
             </summary>
             <param name="instruction"></param>
-            <param name="target"></param>
+            <param name="exp1"></param>
+            <param name="exp2"></param>
         </member>
-        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpressionTypes,System.Int32)">
+        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpression,Sevm.Sir.SirExpression,Sevm.Sir.SirExpression)">
             <summary>
             添加指令
             </summary>
             <param name="instruction"></param>
-            <param name="targetType"></param>
-            <param name="target"></param>
-        </member>
-        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpressionTypes,System.Int32,Sevm.Sir.SirExpressionTypes,System.Int32)">
-            <summary>
-            添加指令
-            </summary>
-            <param name="instruction"></param>
-            <param name="targetType"></param>
-            <param name="target"></param>
-            <param name="sourceType"></param>
-            <param name="source"></param>
+            <param name="exp1"></param>
+            <param name="exp2"></param>
+            <param name="exp3"></param>
         </member>
         <member name="M:Sevm.Sir.SirCodes.ToString">
             <summary>
@@ -307,6 +302,14 @@
             <summary>
             获取一个空定义
             </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.Create(Sevm.Sir.SirExpressionTypes,System.Int32)">
+            <summary>
+            创建一个定义
+            </summary>
+            <param name="tp"></param>
+            <param name="content"></param>
+            <returns></returns>
         </member>
         <member name="M:Sevm.Sir.SirExpression.Value(System.Int32)">
             <summary>
@@ -565,6 +568,21 @@
             列表指令
             </summary>
         </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Ptrl">
+            <summary>
+            设置列表内容指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Leal">
+            <summary>
+            设置列表内容指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Idx">
+            <summary>
+            获取内容匹配索引
+            </summary>
+        </member>
         <member name="F:Sevm.Sir.SirCodeInstructionTypes.Join">
             <summary>
             连接指令
@@ -578,6 +596,26 @@
         <member name="F:Sevm.Sir.SirCodeInstructionTypes.Obj">
             <summary>
             对象指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Ptrk">
+            <summary>
+            设置对象键列表指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Ptrv">
+            <summary>
+            设置对象值列表指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Leak">
+            <summary>
+            获取对象键列表指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Leav">
+            <summary>
+            获取对象值列表指针
             </summary>
         </member>
         <member name="F:Sevm.Sir.SirCodeInstructionTypes.Add">

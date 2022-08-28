@@ -13,13 +13,12 @@ namespace Sevm.Sir {
         /// 添加指令
         /// </summary>
         /// <param name="instruction"></param>
-        /// <param name="target"></param>
-        /// <param name="source"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirExpression target, SirExpression source) {
+        public void Add(SirCodeInstructionTypes instruction) {
             this.Add(new SirCode() {
                 Instruction = instruction,
-                Target = target,
-                Source = source
+                Exp1 = SirExpression.None,
+                Exp2 = SirExpression.None,
+                Exp3 = SirExpression.None,
             });
         }
 
@@ -27,12 +26,13 @@ namespace Sevm.Sir {
         /// 添加指令
         /// </summary>
         /// <param name="instruction"></param>
-        /// <param name="target"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirExpression target) {
+        /// <param name="exp1"></param>
+        public void Add(SirCodeInstructionTypes instruction, SirExpression exp1) {
             this.Add(new SirCode() {
                 Instruction = instruction,
-                Target = target,
-                Source = SirExpression.None, // { ParamType = SirExpressionTypes.None, Value = 0 }
+                Exp1 = exp1,
+                Exp2 = SirExpression.None,
+                Exp3 = SirExpression.None,
             });
         }
 
@@ -40,12 +40,14 @@ namespace Sevm.Sir {
         /// 添加指令
         /// </summary>
         /// <param name="instruction"></param>
-        /// <param name="target"></param>
-        public void AddToIntPtr(SirCodeInstructionTypes instruction, int target) {
+        /// <param name="exp1"></param>
+        /// <param name="exp2"></param>
+        public void Add(SirCodeInstructionTypes instruction, SirExpression exp1, SirExpression exp2) {
             this.Add(new SirCode() {
                 Instruction = instruction,
-                Target = SirExpression.IntPtr(target),//{ ParamType = SirExpressionTypes.IntPtr, Value = target },
-                Source = SirExpression.None, // { ParamType = SirExpressionTypes.None, Value = 0 }
+                Exp1 = exp1,
+                Exp2 = exp2,
+                Exp3 = SirExpression.None,
             });
         }
 
@@ -53,29 +55,15 @@ namespace Sevm.Sir {
         /// 添加指令
         /// </summary>
         /// <param name="instruction"></param>
-        /// <param name="targetType"></param>
-        /// <param name="target"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirExpressionTypes targetType, int target) {
+        /// <param name="exp1"></param>
+        /// <param name="exp2"></param>
+        /// <param name="exp3"></param>
+        public void Add(SirCodeInstructionTypes instruction, SirExpression exp1, SirExpression exp2, SirExpression exp3) {
             this.Add(new SirCode() {
                 Instruction = instruction,
-                Target = new SirExpression() { Type = targetType, Content = target },
-                Source = SirExpression.None, //  { Type = SirExpressionTypes.None, Content = 0 }
-            });
-        }
-
-        /// <summary>
-        /// 添加指令
-        /// </summary>
-        /// <param name="instruction"></param>
-        /// <param name="targetType"></param>
-        /// <param name="target"></param>
-        /// <param name="sourceType"></param>
-        /// <param name="source"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirExpressionTypes targetType, int target, SirExpressionTypes sourceType, int source) {
-            this.Add(new SirCode() {
-                Instruction = instruction,
-                Target = new SirExpression() { Type = targetType, Content = target },
-                Source = new SirExpression() { Type = sourceType, Content = source }
+                Exp1 = exp1,
+                Exp2 = exp2,
+                Exp3 = exp3,
             });
         }
 

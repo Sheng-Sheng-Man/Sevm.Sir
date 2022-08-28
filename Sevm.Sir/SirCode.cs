@@ -14,14 +14,19 @@ namespace Sevm.Sir {
         public SirCodeInstructionTypes Instruction { get; set; }
 
         /// <summary>
-        /// 获取或设置目标参数
+        /// 获取或设置第一参数
         /// </summary>
-        public SirExpression Target { get; set; }
+        public SirExpression Exp1 { get; set; }
 
         /// <summary>
-        /// 获取或设置源参数
+        /// 获取或设置第二参数
         /// </summary>
-        public SirExpression Source { get; set; }
+        public SirExpression Exp2 { get; set; }
+
+        /// <summary>
+        /// 获取或设置第三参数
+        /// </summary>
+        public SirExpression Exp3 { get; set; }
 
         /// <summary>
         /// 获取字符串表示形式
@@ -34,10 +39,16 @@ namespace Sevm.Sir {
                 sb.Append(this.Instruction.ToString());
                 sb.Append(' ');
             }
-            sb.Append(this.Target.ToString());
-            if (this.Source.Type != SirExpressionTypes.None) {
-                sb.Append(", ");
-                sb.Append(this.Source.ToString());
+            if (this.Exp1.Type != SirExpressionTypes.None) {
+                sb.Append(this.Exp1.ToString());
+                if (this.Exp2.Type != SirExpressionTypes.None) {
+                    sb.Append(", ");
+                    sb.Append(this.Exp2.ToString());
+                    if (this.Exp3.Type != SirExpressionTypes.None) {
+                        sb.Append(", ");
+                        sb.Append(this.Exp3.ToString());
+                    }
+                }
             }
             return sb.ToString();
         }
@@ -50,8 +61,9 @@ namespace Sevm.Sir {
             List<byte> ls = new List<byte>();
             ls.Add((byte)((int)Instruction % 256));
             ls.Add((byte)((int)Instruction / 256));
-            ls.AddRange(this.Target.ToBytes());
-            ls.AddRange(this.Source.ToBytes());
+            ls.AddRange(this.Exp1.ToBytes());
+            ls.AddRange(this.Exp2.ToBytes());
+            ls.AddRange(this.Exp3.ToBytes());
             return ls.ToArray();
         }
 

@@ -14,11 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sevm.Sir")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("一种服务于脚本执行的可二进制化指令语言")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.2208.8")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2208.8")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.2208.12")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.2208.12")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sevm.Sir")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sevm.Sir")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.2208.8")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.2208.12")]
 
 // 由 MSBuild WriteCodeFragment 类生成。
 

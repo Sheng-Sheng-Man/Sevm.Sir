@@ -25,6 +25,16 @@ namespace Sevm.Sir {
         public static SirExpression None { get { return new SirExpression() { Type = SirExpressionTypes.None }; } }
 
         /// <summary>
+        /// 创建一个定义
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static SirExpression Create(SirExpressionTypes tp, int content) {
+            return new SirExpression() { Type = tp, Content = content };
+        }
+
+        /// <summary>
         /// 获取一个值定义
         /// </summary>
         /// <param name="content"></param>

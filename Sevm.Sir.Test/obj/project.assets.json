@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "Sevm.Sir/1.0.2208.8": {
+      "Sevm.Sir/1.0.2208.12": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "compile": {
@@ -15,7 +15,7 @@
     }
   },
   "libraries": {
-    "Sevm.Sir/1.0.2208.8": {
+    "Sevm.Sir/1.0.2208.12": {
       "type": "project",
       "path": "../Sevm.Sir/Sevm.Sir.csproj",
       "msbuildProject": "../Sevm.Sir/Sevm.Sir.csproj"
@@ -23,7 +23,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "Sevm.Sir >= 1.0.2208.8"
+      "Sevm.Sir >= 1.0.2208.12"
     ]
   },
   "packageFolders": {

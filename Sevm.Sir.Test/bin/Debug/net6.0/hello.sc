@@ -19,12 +19,8 @@ Code
     @1
         New $2
         List $2
-        Mov #0, 0
         Lea #2, $1
-        Mov #0, 1
-        Mov #1, 0
-        Ptr $2, #2
-        Mov #0, 0
+        Ptrl $2, 0, #2
         Lea #0, $2
         Call [0], [2]
 End Code

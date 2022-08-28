@@ -46,17 +46,45 @@ namespace Sevm.Sir {
         /// </summary>
         List = 0x0301,
         /// <summary>
+        /// 设置列表内容指针
+        /// </summary>
+        Ptrl = 0x0302,
+        /// <summary>
+        /// 设置列表内容指针
+        /// </summary>
+        Leal = 0x0303,
+        /// <summary>
+        /// 获取内容匹配索引
+        /// </summary>
+        Idx = 0x0304,
+        /// <summary>
         /// 连接指令
         /// </summary>
-        Join = 0x0302,
+        Join = 0x0305,
         /// <summary>
         /// 统计指令
         /// </summary>
-        Cnt = 0x0303,
+        Cnt = 0x0306,
         /// <summary>
         /// 对象指令
         /// </summary>
-        Obj = 0x0304,
+        Obj = 0x0307,
+        /// <summary>
+        /// 设置对象键列表指针
+        /// </summary>
+        Ptrk = 0x0308,
+        /// <summary>
+        /// 设置对象值列表指针
+        /// </summary>
+        Ptrv = 0x0309,
+        /// <summary>
+        /// 获取对象键列表指针
+        /// </summary>
+        Leak = 0x030A,
+        /// <summary>
+        /// 获取对象值列表指针
+        /// </summary>
+        Leav = 0x030B,
 
         /// <summary>
         /// 加法指令

@@ -18,27 +18,19 @@ sir.Defines.Add(1, "str", 1);
 // 添加函数定义
 sir.Funcs.Add(1, "main");
 // @1
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Label, Sevm.Sir.SirExpressionTypes.Label, 1);
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Label, SirExpression.Label(1));
 // new $2
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.New, Sevm.Sir.SirExpressionTypes.Variable, 2);
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.New, SirExpression.Variable(2));
 // list $2
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.List, Sevm.Sir.SirExpressionTypes.Variable, 2);
-// mov #0, 0
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Mov, Sevm.Sir.SirExpressionTypes.Storage, 0, Sevm.Sir.SirExpressionTypes.Value, 0);
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.List, SirExpression.Variable(2));
 // lea #2, $1
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, Sevm.Sir.SirExpressionTypes.Storage, 2, Sevm.Sir.SirExpressionTypes.Variable, 1);
-// mov #0, 1
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Mov, Sevm.Sir.SirExpressionTypes.Storage, 0, Sevm.Sir.SirExpressionTypes.Value, 1);
-// mov #1, 0
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Mov, Sevm.Sir.SirExpressionTypes.Storage, 1, Sevm.Sir.SirExpressionTypes.Value, 0);
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, SirExpression.Storage(2), SirExpression.Variable(1));
 // ptr $2, #2
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Ptr, Sevm.Sir.SirExpressionTypes.Variable, 2, Sevm.Sir.SirExpressionTypes.Storage, 2);
-// mov #0, 0
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Mov, Sevm.Sir.SirExpressionTypes.Storage, 0, Sevm.Sir.SirExpressionTypes.Value, 0);
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Ptrl, SirExpression.Variable(2), 0, SirExpression.Storage(2));
 // lea #0, $2
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, Sevm.Sir.SirExpressionTypes.Storage, 0, Sevm.Sir.SirExpressionTypes.Variable, 2);
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, SirExpression.Storage(0), SirExpression.Variable(2));
 // call [0], [2]
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Call, Sevm.Sir.SirExpressionTypes.IntPtr, 0, Sevm.Sir.SirExpressionTypes.IntPtr, 2);
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Call, SirExpression.IntPtr(0), SirExpression.IntPtr(2));
 string str = sir.ToString();
 Console.WriteLine("[SIR]");
 Console.WriteLine(str);

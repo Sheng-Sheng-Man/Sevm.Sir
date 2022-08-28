@@ -69,7 +69,7 @@ namespace Sevm.Sir {
         public byte[] ToBytes() {
             List<byte> ls = new List<byte>();
             // 生成集合
-            ls.AddRange(System.Text.Encoding.ASCII.GetBytes("SIRBC1.0"));
+            ls.AddRange(System.Text.Encoding.ASCII.GetBytes("SIRBC1.1"));
             ls.AddRange(this.Imports.ToBytes());
             ls.AddRange(this.Datas.ToBytes());
             ls.AddRange(this.Defines.ToBytes());

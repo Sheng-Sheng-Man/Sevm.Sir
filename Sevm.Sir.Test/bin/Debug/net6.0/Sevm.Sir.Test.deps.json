@@ -8,13 +8,13 @@
     ".NETCoreApp,Version=v6.0": {
       "Sevm.Sir.Test/1.0.0": {
         "dependencies": {
-          "Sevm.Sir": "1.0.2208.6"
+          "Sevm.Sir": "1.0.2208.10"
         },
         "runtime": {
           "Sevm.Sir.Test.dll": {}
         }
       },
-      "Sevm.Sir/1.0.2208.6": {
+      "Sevm.Sir/1.0.2208.10": {
         "runtime": {
           "Sevm.Sir.dll": {}
         }
@@ -27,7 +27,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Sevm.Sir/1.0.2208.6": {
+    "Sevm.Sir/1.0.2208.10": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
