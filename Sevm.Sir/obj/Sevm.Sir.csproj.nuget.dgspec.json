@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\Sevm.Sir.csproj": {}
+    "X:\\Projects.GitHub\\Sheng-Sheng-Man\\SIR\\Sevm.Sir\\Sevm.Sir.csproj": {}
   },
   "projects": {
-    "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\Sevm.Sir.csproj": {
-      "version": "1.0.2208.14",
+    "X:\\Projects.GitHub\\Sheng-Sheng-Man\\SIR\\Sevm.Sir\\Sevm.Sir.csproj": {
+      "version": "1.0.2208.15",
       "restore": {
-        "projectUniqueName": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\Sevm.Sir.csproj",
+        "projectUniqueName": "X:\\Projects.GitHub\\Sheng-Sheng-Man\\SIR\\Sevm.Sir\\Sevm.Sir.csproj",
         "projectName": "Sevm.Sir",
-        "projectPath": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\Sevm.Sir.csproj",
+        "projectPath": "X:\\Projects.GitHub\\Sheng-Sheng-Man\\SIR\\Sevm.Sir\\Sevm.Sir.csproj",
         "packagesPath": "C:\\Users\\inmou\\.nuget\\packages\\",
-        "outputPath": "X:\\Projects.GitHub\\inmount\\SIR\\Sevm.Sir\\obj\\",
+        "outputPath": "X:\\Projects.GitHub\\Sheng-Sheng-Man\\SIR\\Sevm.Sir\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\inmou\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -444,7 +444,7 @@ namespace Sevm.Sir {
             offset = 0;
             while (offset < defineSize) {
                 // 读取作用域
-                SirScopeTypes dataType = (SirScopeTypes)sir[addr + offset];
+                SirScopeTypes scopeType = (SirScopeTypes)sir[addr + offset];
                 offset++;
                 // 读取变量索引
                 int index = GetInteger(new Span<byte>(sir, addr + offset, 4));
@@ -456,14 +456,14 @@ namespace Sevm.Sir {
                 offset += nameLen;
                 //int ptr = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 //offset += 4;
-                script.Defines.Add(index, name);
+                script.Defines.Add(scopeType, index, name);
             }
             // 加载所有函数
             addr = funcAddr + 4;
             offset = 0;
             while (offset < funcSize) {
                 // 读取作用域
-                SirScopeTypes dataType = (SirScopeTypes)sir[addr + offset];
+                SirScopeTypes scopeType = (SirScopeTypes)sir[addr + offset];
                 offset++;
                 int index = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
@@ -471,7 +471,7 @@ namespace Sevm.Sir {
                 offset += 4;
                 string name = System.Text.Encoding.UTF8.GetString(new Span<byte>(sir, addr + offset, nameLen));
                 offset += nameLen;
-                script.Funcs.Add(index, name);
+                script.Funcs.Add(scopeType, index, name);
             }
             // 加载所有指令
             addr = codeAddr + 4;
