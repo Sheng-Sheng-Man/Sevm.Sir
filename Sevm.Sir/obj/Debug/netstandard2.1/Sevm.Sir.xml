@@ -1,0 +1,851 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sevm.Sir</name>
+    </assembly>
+    <members>
+        <member name="T:Sevm.Sir.Parser">
+            <summary>
+            解析器
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.Parser.GetIntegerBytes(System.Int32)">
+            <summary>
+            获取整型数字
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.Parser.GetInteger(System.Span{System.Byte})">
+            <summary>
+            获取整型数字
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.Parser.GetInstructionType(System.String)">
+            <summary>
+            获取指令类型
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.Parser.FillSirCodeParam(Sevm.Sir.SirExpression,System.String)">
+            <summary>
+            获取指令类型
+            </summary>
+            <param name="param"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.Parser.GetScript(System.String)">
+            <summary>
+            获取脚本对象
+            </summary>
+            <param name="sir"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.Parser.GetScript(System.Byte[])">
+            <summary>
+            获取脚本对象
+            </summary>
+            <param name="sir"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirCode">
+            <summary>
+            脚本代码
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirCode.SourceLine">
+            <summary>
+            获取或设置指令类型
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirCode.Instruction">
+            <summary>
+            获取或设置指令类型
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirCode.Exp1">
+            <summary>
+            获取或设置第一参数
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirCode.Exp2">
+            <summary>
+            获取或设置第二参数
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirCode.Exp3">
+            <summary>
+            获取或设置第三参数
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirCode.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirCode.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirCodes">
+            <summary>
+            代码集合
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes)">
+            <summary>
+            添加指令
+            </summary>
+            <param name="instruction"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpression)">
+            <summary>
+            添加指令
+            </summary>
+            <param name="instruction"></param>
+            <param name="exp1"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpression,Sevm.Sir.SirExpression)">
+            <summary>
+            添加指令
+            </summary>
+            <param name="instruction"></param>
+            <param name="exp1"></param>
+            <param name="exp2"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirCodes.Add(Sevm.Sir.SirCodeInstructionTypes,Sevm.Sir.SirExpression,Sevm.Sir.SirExpression,Sevm.Sir.SirExpression)">
+            <summary>
+            添加指令
+            </summary>
+            <param name="instruction"></param>
+            <param name="exp1"></param>
+            <param name="exp2"></param>
+            <param name="exp3"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirCodes.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirCodes.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirData">
+            <summary>
+            脚本数据
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirData.Index">
+            <summary>
+            获取或设置指针
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirData.DataType">
+            <summary>
+            获取或设置数据类型，0为空，1为字符串，2为数字
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirData.Bytes">
+            <summary>
+            获取或设置数据
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirData.GetString">
+            <summary>
+            获取字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirData.GetNumber">
+            <summary>
+            获取字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirData.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirData.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirDatas">
+            <summary>
+            数据集合
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirDatas.Add(System.Int32,System.Double)">
+            <summary>
+            添加数字
+            </summary>
+            <param name="idx"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirDatas.Add(System.Int32,System.String)">
+            <summary>
+            添加字符串
+            </summary>
+            <param name="idx"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirDatas.Add(System.Int32,Sevm.Sir.SirDataTypes,System.Span{System.Byte})">
+            <summary>
+            添加字符串
+            </summary>
+            <param name="idx"></param>
+            <param name="tp"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirDatas.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirDatas.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirDefine">
+            <summary>
+            脚本定义
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirDefine.Index">
+            <summary>
+            获取或设置索引
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirDefine.Name">
+            <summary>
+            获取或设置名称
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirDefine.Scope">
+            <summary>
+            获取或设置作用域
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirDefine.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirDefine.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirDefines">
+            <summary>
+            定义集合
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirDefines.Add(Sevm.Sir.SirScopeTypes,System.Int32,System.String)">
+            <summary>
+            添加定义
+            </summary>
+            <param name="index"></param>
+            <param name="name"></param>
+            <param name="scope"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirDefines.Add(System.Int32,System.String)">
+            <summary>
+            添加定义
+            </summary>
+            <param name="index"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirDefines.Add(System.Int32)">
+            <summary>
+            添加定义
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirDefines.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirDefines.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirExpression">
+            <summary>
+            脚本代码参数
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirExpression.Type">
+            <summary>
+            获取或设置参数类型
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirExpression.Content">
+            <summary>
+            获取或设置内容
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirExpression.None">
+            <summary>
+            获取一个空定义
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.Create(Sevm.Sir.SirExpressionTypes,System.Int32)">
+            <summary>
+            创建一个定义
+            </summary>
+            <param name="tp"></param>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.Value(System.Int32)">
+            <summary>
+            获取一个值定义
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.IntPtr(System.Int32)">
+            <summary>
+            获取一个指针定义
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.Label(System.Int32)">
+            <summary>
+            获取一个标签定义
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.Variable(System.Int32)">
+            <summary>
+            获取一个变量定义
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.Storage(System.Int32)">
+            <summary>
+            获取一个寄存器定义
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirExpression.op_Implicit(System.Int32)~Sevm.Sir.SirExpression">
+            <summary>
+            从整型数据建立对象
+            </summary>
+            <param name="value">内容</param>
+        </member>
+        <member name="T:Sevm.Sir.SirFunc">
+            <summary>
+            脚本函数
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirFunc.Index">
+            <summary>
+            获取或设置索引
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirFunc.Name">
+            <summary>
+            获取或设置名称
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirFunc.Scope">
+            <summary>
+            获取或设置作用域
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirFunc.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirFunc.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirFuncs">
+            <summary>
+            函数集合
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirFuncs.Add(Sevm.Sir.SirScopeTypes,System.Int32,System.String)">
+            <summary>
+            添加定义
+            </summary>
+            <param name="index"></param>
+            <param name="name"></param>
+            <param name="scope"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirFuncs.Add(System.Int32,System.String)">
+            <summary>
+            添加函数
+            </summary>
+            <param name="index"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirFuncs.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirFuncs.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirImport">
+            <summary>
+            脚本导入信息
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirImport.ImportType">
+            <summary>
+            获取或设置导入类型
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirImport.Content">
+            <summary>
+            获取或设置导入对象
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirImport.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirImport.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirImports">
+            <summary>
+            定义集合
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirImports.Add(Sevm.Sir.SirImportTypes,System.String)">
+            <summary>
+            添加引入
+            </summary>
+            <param name="tp"></param>
+            <param name="content"></param>
+        </member>
+        <member name="M:Sevm.Sir.SirImports.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirImports.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Sevm.Sir.SirScript">
+            <summary>
+            中间语言脚本
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirScript.Imports">
+            <summary>
+            获取引入集合
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirScript.Datas">
+            <summary>
+            获取数据集合
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirScript.Defines">
+            <summary>
+            获取变量集合
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirScript.Funcs">
+            <summary>
+            获取函数集合
+            </summary>
+        </member>
+        <member name="P:Sevm.Sir.SirScript.Codes">
+            <summary>
+            获取代码集合
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirScript.#ctor">
+            <summary>
+            对象实例化
+            </summary>
+        </member>
+        <member name="M:Sevm.Sir.SirScript.ToString">
+            <summary>
+            获取字符串表示形式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirScript.ToBytes">
+            <summary>
+            获取字节数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Sevm.Sir.SirScript.Dispose">
+            <summary>
+            释放资源
+            </summary>
+        </member>
+        <member name="T:Sevm.Sir.SirCodeInstructionTypes">
+            <summary>
+            指令类型
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.None">
+            <summary>
+            空指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Label">
+            <summary>
+            标签指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Mov">
+            <summary>
+            传送指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Ptr">
+            <summary>
+            设置指针指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Lea">
+            <summary>
+            获取指针指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Int">
+            <summary>
+            获取整数部分指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Frac">
+            <summary>
+            获取小数部分指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.List">
+            <summary>
+            列表指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Ptrl">
+            <summary>
+            设置列表内容指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Leal">
+            <summary>
+            设置列表内容指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Idx">
+            <summary>
+            获取内容匹配索引
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Join">
+            <summary>
+            连接指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Cnt">
+            <summary>
+            统计指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Obj">
+            <summary>
+            对象指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Ptrk">
+            <summary>
+            设置对象键列表指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Ptrv">
+            <summary>
+            设置对象值列表指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Leak">
+            <summary>
+            获取对象键列表指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Leav">
+            <summary>
+            获取对象值列表指针
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Add">
+            <summary>
+            加法指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Sub">
+            <summary>
+            减法指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Mul">
+            <summary>
+            乘法指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Div">
+            <summary>
+            除法指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Not">
+            <summary>
+            非指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.And">
+            <summary>
+            与指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Or">
+            <summary>
+            或指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Xor">
+            <summary>
+            异或指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Equal">
+            <summary>
+            相等比较指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Large">
+            <summary>
+            大于比较指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Small">
+            <summary>
+            小于比较指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Jmp">
+            <summary>
+            无条件跳转指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Jmpf">
+            <summary>
+            带条件跳转指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Call">
+            <summary>
+            调用指令
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirCodeInstructionTypes.Ret">
+            <summary>
+            返回指令
+            </summary>
+        </member>
+        <member name="T:Sevm.Sir.SirDataTypes">
+            <summary>
+            数据类型
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirDataTypes.None">
+            <summary>
+            空
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirDataTypes.String">
+            <summary>
+            字符串
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirDataTypes.Number">
+            <summary>
+            数字
+            </summary>
+        </member>
+        <member name="T:Sevm.Sir.SirScopeTypes">
+            <summary>
+            作用域类型
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirScopeTypes.Private">
+            <summary>
+            私有
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirScopeTypes.Public">
+            <summary>
+            公开
+            </summary>
+        </member>
+        <member name="T:Sevm.Sir.SirExpressionTypes">
+            <summary>
+            指令类型
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirExpressionTypes.None">
+            <summary>
+            空
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirExpressionTypes.Value">
+            <summary>
+            值
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirExpressionTypes.IntPtr">
+            <summary>
+            指针 []
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirExpressionTypes.Storage">
+            <summary>
+            寄存器 #
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirExpressionTypes.Variable">
+            <summary>
+            变量 $
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirExpressionTypes.Label">
+            <summary>
+            标签 @
+            </summary>
+        </member>
+        <member name="T:Sevm.Sir.SirParserTypes">
+            <summary>
+            解析类型
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirParserTypes.None">
+            <summary>
+            空
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirParserTypes.Import">
+            <summary>
+            引入
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirParserTypes.Data">
+            <summary>
+            数据
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirParserTypes.Define">
+            <summary>
+            定义
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirParserTypes.Func">
+            <summary>
+            函数
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirParserTypes.Code">
+            <summary>
+            代码
+            </summary>
+        </member>
+        <member name="T:Sevm.Sir.SirParserLineTypes">
+            <summary>
+            解析类型
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirParserLineTypes.Normal">
+            <summary>
+            正常
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirParserLineTypes.Finish">
+            <summary>
+            结束
+            </summary>
+        </member>
+        <member name="T:Sevm.Sir.SirImportTypes">
+            <summary>
+            引入类型
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirImportTypes.Use">
+            <summary>
+            引入内置函数
+            </summary>
+        </member>
+        <member name="F:Sevm.Sir.SirImportTypes.Lib">
+            <summary>
+            引入外部程序
+            </summary>
+        </member>
+    </members>
+</doc>
