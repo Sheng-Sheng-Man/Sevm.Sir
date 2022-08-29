@@ -17,7 +17,7 @@ namespace Sevm.Sir {
         /// <summary>
         /// 获取或设置指针
         /// </summary>
-        public int IntPtr { get; set; }
+        public int Index { get; set; }
 
         /// <summary>
         /// 获取或设置数据类型，0为空，1为字符串，2为数字
@@ -61,7 +61,7 @@ namespace Sevm.Sir {
         /// <returns></returns>
         public new string ToString() {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"[{this.IntPtr}]");
+            sb.Append($"${this.Index}");
             sb.Append(' ');
             sb.Append(this.DataType.ToString());
             sb.Append(' ');
@@ -83,7 +83,7 @@ namespace Sevm.Sir {
         public byte[] ToBytes() {
             List<byte> ls = new List<byte>();
             // 生成长度
-            ls.AddRange(Parser.GetIntegerBytes(this.IntPtr));
+            ls.AddRange(Parser.GetIntegerBytes(this.Index));
             ls.Add((byte)this.DataType);
             // 添加长度
             ls.AddRange(Parser.GetIntegerBytes(this.Bytes.Length));

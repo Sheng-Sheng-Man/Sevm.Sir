@@ -20,11 +20,18 @@ namespace Sevm.Sir {
         public string Name { get; set; }
 
         /// <summary>
+        /// 获取或设置作用域
+        /// </summary>
+        public SirScopeTypes Scope { get; set; }
+
+        /// <summary>
         /// 获取字符串表示形式
         /// </summary>
         /// <returns></returns>
         public new string ToString() {
             StringBuilder sb = new StringBuilder();
+            sb.Append(this.Scope.ToString());
+            sb.Append(' ');
             sb.Append($"@{this.Index}");
             sb.Append(' ');
             sb.Append(this.Name);
@@ -37,6 +44,8 @@ namespace Sevm.Sir {
         /// <returns></returns>
         public byte[] ToBytes() {
             List<byte> ls = new List<byte>();
+            // 添加作用域
+            ls.Add((byte)this.Scope);
             // 生成长度
             ls.AddRange(Parser.GetIntegerBytes(this.Index));
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(this.Name);

@@ -50,7 +50,7 @@ namespace Sevm.Sir {
             switch (name) {
                 // 二、数据指令
                 case "mov": return SirCodeInstructionTypes.Mov;
-                case "new": return SirCodeInstructionTypes.New;
+                //case "new": return SirCodeInstructionTypes.New;
                 case "ptr": return SirCodeInstructionTypes.Ptr;
                 case "lea": return SirCodeInstructionTypes.Lea;
                 case "int": return SirCodeInstructionTypes.Int;
@@ -189,10 +189,10 @@ namespace Sevm.Sir {
                                             }
                                             break;
                                         case SirParserTypes.Data:
-                                            if (ls.Count < 3) throw new Exception($"意外的'{name}'指令");
-                                            if (!name.StartsWith("[")) throw new Exception($"意外的'{name}'指令");
-                                            if (!name.EndsWith("]")) throw new Exception($"意外的'{name}'指令");
-                                            int ptr = int.Parse(name.Substring(1, name.Length - 2));
+                                            if (ls.Count < 2) throw new Exception($"意外的'{name}'指令");
+                                            if (!name.StartsWith("$")) throw new Exception($"意外的'{name}'指令");
+                                            //if (!name.EndsWith("]")) throw new Exception($"意外的'{name}'指令");
+                                            int idx = int.Parse(name.Substring(1));
                                             string dataType = ls[1].ToLower();
                                             string value = ls[2];
                                             if (dataType == "string") {
@@ -200,26 +200,42 @@ namespace Sevm.Sir {
                                                 if (value.Length < 2) throw new Exception($"不符合规范的 {value} 字符串");
                                                 if (!value.StartsWith("\"")) throw new Exception($"不符合规范的 {value} 字符串");
                                                 if (!value.EndsWith("\"")) throw new Exception($"不符合规范的 {value} 字符串");
-                                                script.Datas.Add(ptr, value.Substring(1, value.Length - 2));
+                                                script.Datas.Add(idx, value.Substring(1, value.Length - 2));
                                             } else {
                                                 // 数值
-                                                script.Datas.Add(ptr, double.Parse(value));
+                                                script.Datas.Add(idx, double.Parse(value));
                                             }
                                             break;
                                         case SirParserTypes.Define:
                                             if (ls.Count < 3) throw new Exception($"意外的'{name}'指令");
-                                            if (!name.StartsWith("$")) throw new Exception($"意外的'{name}'指令");
-                                            int index = int.Parse(name.Substring(1));
-                                            string defName = ls[1];
-                                            ptr = int.Parse(ls[2]);
-                                            script.Defines.Add(index, defName, ptr);
+                                            if (!ls[1].StartsWith("$")) throw new Exception($"意外的'{ls[1]}'变量定义");
+                                            SirScopeTypes sirScope = SirScopeTypes.Private;
+                                            if (name == "private") {
+                                                sirScope = SirScopeTypes.Private;
+                                            } else if (name == "public") {
+                                                sirScope = SirScopeTypes.Public;
+                                            } else {
+                                                throw new Exception($"不支持的作用域的'{name}'");
+                                            }
+                                            int index = int.Parse(ls[1].Substring(1));
+                                            string defName = ls[2];
+                                            //int ptr = int.Parse(ls[2]);
+                                            script.Defines.Add(sirScope, index, defName);
                                             break;
                                         case SirParserTypes.Func:
-                                            if (ls.Count < 2) throw new Exception($"意外的'{name}'指令");
-                                            if (!name.StartsWith("@")) throw new Exception($"意外的'{name}'指令");
-                                            index = int.Parse(name.Substring(1));
-                                            string funName = ls[1];
-                                            script.Funcs.Add(index, funName);
+                                            if (ls.Count < 3) throw new Exception($"意外的'{name}'指令");
+                                            if (!ls[1].StartsWith("@")) throw new Exception($"意外的'{ls[1]}'标签定义");
+                                            sirScope = SirScopeTypes.Private;
+                                            if (name == "private") {
+                                                sirScope = SirScopeTypes.Private;
+                                            } else if (name == "public") {
+                                                sirScope = SirScopeTypes.Public;
+                                            } else {
+                                                throw new Exception($"不支持的作用域的'{name}'");
+                                            }
+                                            index = int.Parse(ls[1].Substring(1));
+                                            string funName = ls[2];
+                                            script.Funcs.Add(sirScope, index, funName);
                                             break;
                                         case SirParserTypes.Code:
                                             if (name.StartsWith("@")) {
@@ -375,7 +391,7 @@ namespace Sevm.Sir {
             SirScript script = new SirScript();
             if (sir.Length <= 5) throw new Exception("不是标准的sbc文件");
             string sign = System.Text.Encoding.ASCII.GetString(sir, 0, 8);
-            if (sign != "SIRBC1.1") throw new Exception("不是标准的SIRBC1.1文件");
+            if (sign != "SIRBC1.2") throw new Exception("不是标准的SIRBC1.2文件");
             int importAddr = 8;
             int importSize = 0;
             int dataAddr = 0;
@@ -414,33 +430,41 @@ namespace Sevm.Sir {
             addr = dataAddr + 4;
             offset = 0;
             while (offset < dataSize) {
-                int ptr = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                int idx = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
                 SirDataTypes dataType = (SirDataTypes)sir[addr + offset];
                 offset++;
                 int dataLen = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
-                script.Datas.Add(ptr, dataType, new Span<byte>(sir, addr + offset, dataLen));
+                script.Datas.Add(idx, dataType, new Span<byte>(sir, addr + offset, dataLen));
                 offset += dataLen;
             }
             // 加载所有定义
             addr = defineAddr + 4;
             offset = 0;
             while (offset < defineSize) {
+                // 读取作用域
+                SirScopeTypes dataType = (SirScopeTypes)sir[addr + offset];
+                offset++;
+                // 读取变量索引
                 int index = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
+                // 读取名称
                 int nameLen = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
                 string name = System.Text.Encoding.UTF8.GetString(new Span<byte>(sir, addr + offset, nameLen));
                 offset += nameLen;
-                int ptr = GetInteger(new Span<byte>(sir, addr + offset, 4));
-                offset += 4;
-                script.Defines.Add(index, name, ptr);
+                //int ptr = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                //offset += 4;
+                script.Defines.Add(index, name);
             }
             // 加载所有函数
             addr = funcAddr + 4;
             offset = 0;
             while (offset < funcSize) {
+                // 读取作用域
+                SirScopeTypes dataType = (SirScopeTypes)sir[addr + offset];
+                offset++;
                 int index = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
                 int nameLen = GetInteger(new Span<byte>(sir, addr + offset, 4));

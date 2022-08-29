@@ -3,24 +3,26 @@ Import
 End Import
 
 Data
-    [1] String "Hello World"
-    [2] String "print"
+    $0 String "Hello World"
+    $1 String "print"
 End Data
 
 Define
-    $1 str 1
+    Private $2 str
 End Define
 
 Func
-    @1 main
+    Private @1 main
 End Func
 
 Code
     @1
-        New $2
-        List $2
-        Lea #2, $1
+        Lea #2, $0
+        Ptr @2, #2
+        Ptr $3
+        List $3
+        Lea #2, $2
         Ptrl $2, 0, #2
-        Lea #0, $2
-        Call [0], [2]
+        Lea #0, $3
+        Call [0], $1
 End Code

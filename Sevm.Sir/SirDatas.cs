@@ -12,12 +12,12 @@ namespace Sevm.Sir {
         /// <summary>
         /// 添加数字
         /// </summary>
-        /// <param name="ptr"></param>
+        /// <param name="idx"></param>
         /// <param name="value"></param>
-        public void Add(int ptr, double value) {
+        public void Add(int idx, double value) {
             this.Add(new SirData() {
                 DataType = SirDataTypes.Number,
-                IntPtr = ptr,
+                Index = idx,
                 Bytes = System.Text.Encoding.UTF8.GetBytes(value.ToString())
             });
         }
@@ -25,12 +25,12 @@ namespace Sevm.Sir {
         /// <summary>
         /// 添加字符串
         /// </summary>
-        /// <param name="ptr"></param>
+        /// <param name="idx"></param>
         /// <param name="value"></param>
-        public void Add(int ptr, string value) {
+        public void Add(int idx, string value) {
             this.Add(new SirData() {
                 DataType = SirDataTypes.String,
-                IntPtr = ptr,
+                Index = idx,
                 Bytes = System.Text.Encoding.UTF8.GetBytes(value)
             });
         }
@@ -38,13 +38,13 @@ namespace Sevm.Sir {
         /// <summary>
         /// 添加字符串
         /// </summary>
-        /// <param name="ptr"></param>
+        /// <param name="idx"></param>
         /// <param name="tp"></param>
         /// <param name="value"></param>
-        public void Add(int ptr, SirDataTypes tp, Span<byte> value) {
+        public void Add(int idx, SirDataTypes tp, Span<byte> value) {
             this.Add(new SirData() {
                 DataType = tp,
-                IntPtr = ptr,
+                Index = idx,
                 Bytes = value.ToArray()
             });
         }

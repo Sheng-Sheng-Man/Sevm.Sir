@@ -10,6 +10,20 @@ namespace Sevm.Sir {
     public class SirFuncs : List<SirFunc> {
 
         /// <summary>
+        /// 添加定义
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="name"></param>
+        /// <param name="scope"></param>
+        public void Add(SirScopeTypes scope, int index, string name) {
+            this.Add(new SirFunc() {
+                Index = index,
+                Name = name,
+                Scope = scope,
+            });
+        }
+
+        /// <summary>
         /// 添加函数
         /// </summary>
         /// <param name="index"></param>

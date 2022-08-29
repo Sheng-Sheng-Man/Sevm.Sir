@@ -14,12 +14,12 @@ namespace Sevm.Sir {
         /// </summary>
         /// <param name="index"></param>
         /// <param name="name"></param>
-        /// <param name="ptr"></param>
-        public void Add(int index, string name, int ptr) {
+        /// <param name="scope"></param>
+        public void Add(SirScopeTypes scope, int index, string name) {
             this.Add(new SirDefine() {
                 Index = index,
                 Name = name,
-                IntPtr = ptr
+                Scope = scope,
             });
         }
 
@@ -27,12 +27,24 @@ namespace Sevm.Sir {
         /// 添加定义
         /// </summary>
         /// <param name="index"></param>
-        /// <param name="ptr"></param>
-        public void Add(int index, int ptr) {
+        /// <param name="name"></param>
+        public void Add(int index, string name) {
+            this.Add(new SirDefine() {
+                Index = index,
+                Name = name,
+                Scope = SirScopeTypes.Private,
+            });
+        }
+
+        /// <summary>
+        /// 添加定义
+        /// </summary>
+        /// <param name="index"></param>
+        public void Add(int index) {
             this.Add(new SirDefine() {
                 Index = index,
                 Name = "",
-                IntPtr = ptr
+                Scope = SirScopeTypes.Private,
             });
         }
 

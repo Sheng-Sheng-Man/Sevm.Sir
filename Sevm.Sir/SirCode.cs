@@ -11,6 +11,11 @@ namespace Sevm.Sir {
         /// <summary>
         /// 获取或设置指令类型
         /// </summary>
+        public int SourceLine { get; set; }
+
+        /// <summary>
+        /// 获取或设置指令类型
+        /// </summary>
         public SirCodeInstructionTypes Instruction { get; set; }
 
         /// <summary>

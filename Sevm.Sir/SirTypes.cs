@@ -21,25 +21,21 @@ namespace Sevm.Sir {
         /// </summary>
         Mov = 0x0201,
         /// <summary>
-        /// 变量申请指令
-        /// </summary>
-        New = 0x0202,
-        /// <summary>
         /// 设置指针指令
         /// </summary>
-        Ptr = 0x0203,
+        Ptr = 0x0202,
         /// <summary>
         /// 获取指针指令
         /// </summary>
-        Lea = 0x0204,
+        Lea = 0x0203,
         /// <summary>
         /// 获取整数部分指令
         /// </summary>
-        Int = 0x0205,
+        Int = 0x0204,
         /// <summary>
         /// 获取小数部分指令
         /// </summary>
-        Frac = 0x0206,
+        Frac = 0x0205,
 
         /// <summary>
         /// 列表指令
@@ -167,6 +163,20 @@ namespace Sevm.Sir {
         /// 数字
         /// </summary>
         Number = 0x02,
+    }
+
+    /// <summary>
+    /// 作用域类型
+    /// </summary>
+    public enum SirScopeTypes {
+        /// <summary>
+        /// 私有
+        /// </summary>
+        Private = 0x00,
+        /// <summary>
+        /// 公开
+        /// </summary>
+        Public = 0x01,
     }
 
     /// <summary>

@@ -11,26 +11,30 @@ Sevm.Sir.SirScript sir = new Sevm.Sir.SirScript();
 // 添加引入
 sir.Imports.Add(Sevm.Sir.SirImportTypes.Use, "host");
 // 添加数据
-sir.Datas.Add(1, "Hello World");
-sir.Datas.Add(2, "print");
+sir.Datas.Add(0, "Hello World");
+sir.Datas.Add(1, "print");
 // 添加变量定义
-sir.Defines.Add(1, "str", 1);
+sir.Defines.Add(2, "str");
 // 添加函数定义
 sir.Funcs.Add(1, "main");
 // @1
 sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Label, SirExpression.Label(1));
+// lea #2, $0
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, SirExpression.Storage(2), SirExpression.Variable(0));
+// ptr $2, #2
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Ptr, SirExpression.Label(2), SirExpression.Storage(2));
 // new $2
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.New, SirExpression.Variable(2));
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Ptr, SirExpression.Variable(3));
 // list $2
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.List, SirExpression.Variable(2));
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.List, SirExpression.Variable(3));
 // lea #2, $1
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, SirExpression.Storage(2), SirExpression.Variable(1));
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, SirExpression.Storage(2), SirExpression.Variable(2));
 // ptr $2, #2
 sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Ptrl, SirExpression.Variable(2), 0, SirExpression.Storage(2));
 // lea #0, $2
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, SirExpression.Storage(0), SirExpression.Variable(2));
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Lea, SirExpression.Storage(0), SirExpression.Variable(3));
 // call [0], [2]
-sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Call, SirExpression.IntPtr(0), SirExpression.IntPtr(2));
+sir.Codes.Add(Sevm.Sir.SirCodeInstructionTypes.Call, SirExpression.IntPtr(0), SirExpression.Variable(1));
 string str = sir.ToString();
 Console.WriteLine("[SIR]");
 Console.WriteLine(str);
@@ -98,19 +102,19 @@ using (var f = System.IO.File.Open(pathHello2Sc, FileMode.Open)) {
     }
     f.Close();
 }
-string pathHello3Sbc = $"{localPath}hello3.sbc";
-Console.WriteLine($"[{pathHello3Sbc}]");
-using (var f = System.IO.File.Open(pathHello3Sbc, FileMode.Open)) {
-    List<byte> ls = new List<byte>();
-    byte[] buffer = new byte[1024];
-    int len;
-    do {
-        len = f.Read(buffer, 0, buffer.Length);
-        for (int i = 0; i < len; i++) {
-            ls.Add(buffer[i]);
-        }
-    } while (len > 0);
-    var script = Parser.GetScript(ls.ToArray());
-    Console.WriteLine(script.ToString());
-    f.Close();
-}
+//string pathHello3Sbc = $"{localPath}hello3.sbc";
+//Console.WriteLine($"[{pathHello3Sbc}]");
+//using (var f = System.IO.File.Open(pathHello3Sbc, FileMode.Open)) {
+//    List<byte> ls = new List<byte>();
+//    byte[] buffer = new byte[1024];
+//    int len;
+//    do {
+//        len = f.Read(buffer, 0, buffer.Length);
+//        for (int i = 0; i < len; i++) {
+//            ls.Add(buffer[i]);
+//        }
+//    } while (len > 0);
+//    var script = Parser.GetScript(ls.ToArray());
+//    Console.WriteLine(script.ToString());
+//    f.Close();
+//}
