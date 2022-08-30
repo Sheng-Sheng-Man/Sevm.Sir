@@ -128,6 +128,7 @@ namespace Sevm.Sir {
             List<string> ls = new List<string>();
             bool inString = false;
             bool inEscape = false;
+            int line = 1;
             for (int i = 0; i < sir.Length; i++) {
                 char chr = sir[i];
                 switch (chr) {
@@ -135,71 +136,71 @@ namespace Sevm.Sir {
                     case '\n':
                         #region [=====换行=====]
                         // 字符串中
-                        if (inString) throw new Exception($"意外的'\\n'符号");
+                        if (inString) throw new SirException(line, 0, $"意外的'\\n'符号");
                         // 判断是否有内容
                         if (code.Length > 0) { ls.Add(code.ToString()); code.Clear(); }
                         if (ls.Count > 0) {
                             string name = ls[0].ToLower();
                             switch (name) {
                                 case "import":
-                                    if (tp != SirParserTypes.None) throw new Exception($"意外的'{name}'指令");
+                                    if (tp != SirParserTypes.None) throw new SirException(line, 0, $"意外的'{name}'指令");
                                     tp = SirParserTypes.Import;
                                     break;
                                 case "code":
-                                    if (tp != SirParserTypes.None) throw new Exception($"意外的'{name}'指令");
+                                    if (tp != SirParserTypes.None) throw new SirException(line, 0, $"意外的'{name}'指令");
                                     tp = SirParserTypes.Code;
                                     break;
                                 case "data":
-                                    if (tp != SirParserTypes.None) throw new Exception($"意外的'{name}'指令");
+                                    if (tp != SirParserTypes.None) throw new SirException(line, 0, $"意外的'{name}'指令");
                                     tp = SirParserTypes.Data;
                                     break;
                                 case "define":
-                                    if (tp != SirParserTypes.None) throw new Exception($"意外的'{name}'指令");
+                                    if (tp != SirParserTypes.None) throw new SirException(line, 0, $"意外的'{name}'指令");
                                     tp = SirParserTypes.Define;
                                     break;
                                 case "func":
-                                    if (tp != SirParserTypes.None) throw new Exception($"意外的'{name}'指令");
+                                    if (tp != SirParserTypes.None) throw new SirException(line, 0, $"意外的'{name}'指令");
                                     tp = SirParserTypes.Func;
                                     break;
                                 case "end":
-                                    if (ls.Count < 2) throw new Exception($"意外的'{name}'指令");
-                                    if (tp == SirParserTypes.None) throw new Exception($"意外的'{name}'指令");
+                                    if (ls.Count < 2) throw new SirException(line, 0, $"'{name}'指令缺少必要关联指令");
+                                    if (tp == SirParserTypes.None) throw new SirException(line, 0, $"意外的'{name}'指令");
                                     string sign = ls[1].ToLower();
                                     if (tp == SirParserTypes.Data && sign == "data") { tp = SirParserTypes.None; break; }
                                     if (tp == SirParserTypes.Define && sign == "define") { tp = SirParserTypes.None; break; }
                                     if (tp == SirParserTypes.Func && sign == "func") { tp = SirParserTypes.None; break; }
                                     if (tp == SirParserTypes.Code && sign == "code") { tp = SirParserTypes.None; break; }
                                     if (tp == SirParserTypes.Import && sign == "import") { tp = SirParserTypes.None; break; }
-                                    throw new Exception($"意外的'{name}'指令");
+                                    throw new SirException(line, 0, $"'{name}'指令不支持关联类型'{tp.ToString()}'");
                                 default:
                                     // 判断异常
                                     switch (tp) {
                                         case SirParserTypes.Import:
-                                            if (ls.Count < 2) throw new Exception($"意外的'{name}'指令");
+                                            if (ls.Count < 2) throw new SirException(line, 0, $"{tp.ToString()}段定义关键字数量不足");
                                             string content = ls[1];
-                                            if (content.Length < 2) throw new Exception($"不符合规范的 {content} 字符串");
-                                            if (!content.StartsWith("\"")) throw new Exception($"不符合规范的 {content} 字符串");
-                                            if (!content.EndsWith("\"")) throw new Exception($"不符合规范的 {content} 字符串");
+                                            if (content.Length < 2) throw new SirException(line, 0, $"不符合规范的 {content} 字符串");
+                                            if (!content.StartsWith("\"")) throw new SirException(line, 0, $"不符合规范的 {content} 字符串");
+                                            if (!content.EndsWith("\"")) throw new SirException(line, 0, $"不符合规范的 {content} 字符串");
                                             if (name == "use") {
                                                 script.Imports.Add(SirImportTypes.Use, content.Substring(1, content.Length - 2));
                                             } else if (name == "lib") {
                                                 script.Imports.Add(SirImportTypes.Lib, content.Substring(1, content.Length - 2));
                                             } else {
-                                                throw new Exception($"意外的'{name}'指令");
+                                                throw new SirException(line, 0, $"意外的'{name}'引入类型");
                                             }
                                             break;
                                         case SirParserTypes.Data:
-                                            if (ls.Count < 2) throw new Exception($"意外的'{name}'指令");
-                                            if (!name.StartsWith("$")) throw new Exception($"意外的'{name}'指令");
-                                            //if (!name.EndsWith("]")) throw new Exception($"意外的'{name}'指令");
+                                            if (ls.Count < 2) throw new SirException(line, 0, $"{tp.ToString()}段定义关键字数量不足");
+                                            if (!name.StartsWith("$")) throw new SirException(line, 0, $"不符合规范的'{name}'变量定义");
+                                            //if (!name.EndsWith("]")) throw new SirException(line, 0,$"意外的'{name}'指令");
                                             int idx = int.Parse(name.Substring(1));
                                             string dataType = ls[1].ToLower();
                                             string value = ls[2];
                                             if (dataType == "string") {
                                                 // 字符串
-                                                if (value.Length < 2) throw new Exception($"不符合规范的 {value} 字符串");
-                                                if (!value.StartsWith("\"")) throw new Exception($"不符合规范的 {value} 字符串");
-                                                if (!value.EndsWith("\"")) throw new Exception($"不符合规范的 {value} 字符串");
+                                                if (value.Length < 2) throw new SirException(line, 0, $"不符合规范的 {value} 字符串");
+                                                if (!value.StartsWith("\"")) throw new SirException(line, 0, $"不符合规范的 {value} 字符串");
+                                                if (!value.EndsWith("\"")) throw new SirException(line, 0, $"不符合规范的 {value} 字符串");
                                                 script.Datas.Add(idx, value.Substring(1, value.Length - 2));
                                             } else {
                                                 // 数值
@@ -207,15 +208,15 @@ namespace Sevm.Sir {
                                             }
                                             break;
                                         case SirParserTypes.Define:
-                                            if (ls.Count < 3) throw new Exception($"意外的'{name}'指令");
-                                            if (!ls[1].StartsWith("$")) throw new Exception($"意外的'{ls[1]}'变量定义");
+                                            if (ls.Count < 3) throw new SirException(line, 0, $"{tp.ToString()}段定义关键字数量不足");
+                                            if (!ls[1].StartsWith("$")) throw new SirException(line, 0, $"不符合规范的'{ls[1]}'变量定义");
                                             SirScopeTypes sirScope = SirScopeTypes.Private;
                                             if (name == "private") {
                                                 sirScope = SirScopeTypes.Private;
                                             } else if (name == "public") {
                                                 sirScope = SirScopeTypes.Public;
                                             } else {
-                                                throw new Exception($"不支持的作用域的'{name}'");
+                                                throw new SirException(line, 0, $"不支持的作用域的'{name}'");
                                             }
                                             int index = int.Parse(ls[1].Substring(1));
                                             string defName = ls[2];
@@ -223,15 +224,15 @@ namespace Sevm.Sir {
                                             script.Defines.Add(sirScope, index, defName);
                                             break;
                                         case SirParserTypes.Func:
-                                            if (ls.Count < 3) throw new Exception($"意外的'{name}'指令");
-                                            if (!ls[1].StartsWith("@")) throw new Exception($"意外的'{ls[1]}'标签定义");
+                                            if (ls.Count < 3) throw new SirException(line, 0, $"{tp.ToString()}段定义关键字数量不足");
+                                            if (!ls[1].StartsWith("@")) throw new SirException(line, 0, $"不符合规范的'{ls[1]}'标签定义");
                                             sirScope = SirScopeTypes.Private;
                                             if (name == "private") {
                                                 sirScope = SirScopeTypes.Private;
                                             } else if (name == "public") {
                                                 sirScope = SirScopeTypes.Public;
                                             } else {
-                                                throw new Exception($"不支持的作用域的'{name}'");
+                                                throw new SirException(line, 0, $"不支持的作用域的'{name}'");
                                             }
                                             index = int.Parse(ls[1].Substring(1));
                                             string funName = ls[2];
@@ -269,13 +270,14 @@ namespace Sevm.Sir {
                                             }
                                             break;
                                         default:
-                                            throw new Exception($"意外的'{name}'指令");
+                                            throw new SirException(line, 0, $"不支持的'{tp.ToString()}'段类型");
                                     }
                                     break;
                             }
                             ls.Clear();
                         }
                         ltp = SirParserLineTypes.Normal;
+                        line++;
                         #endregion
                         break;
                     case ';':
@@ -317,7 +319,7 @@ namespace Sevm.Sir {
                             code.Clear();
                             break;
                         }
-                        throw new Exception($"意外的'{chr}'字符");
+                        throw new SirException(line, 0, $"意外的'{chr}'字符");
                     #endregion
                     //break;
                     case '"':
@@ -337,7 +339,7 @@ namespace Sevm.Sir {
                         #region [=====反斜杠=====]
                         // 当行结束，则忽略
                         if (ltp == SirParserLineTypes.Finish) break;
-                        if (!inString) throw new Exception($"意外的'{chr}'字符");
+                        if (!inString) throw new SirException(line, 0, $"意外的'{chr}'字符");
                         if (inEscape) {
                             code.Append(chr);
                             inEscape = false;
@@ -372,7 +374,7 @@ namespace Sevm.Sir {
                         break;
                     default:
                         // 意外的转义符
-                        if (inEscape) throw new Exception($"意外的'{chr}'字符");
+                        if (inEscape) throw new SirException(line, 0, $"意外的'{chr}'字符");
                         // 当行结束，则忽略
                         if (ltp == SirParserLineTypes.Finish) break;
                         code.Append(chr);
@@ -389,9 +391,12 @@ namespace Sevm.Sir {
         /// <returns></returns>
         public static SirScript GetScript(byte[] sir) {
             SirScript script = new SirScript();
-            if (sir.Length <= 5) throw new Exception("不是标准的sbc文件");
+            if (sir.Length <= 5) throw new SirException(0, "不是标准的sbc文件");
             string sign = System.Text.Encoding.ASCII.GetString(sir, 0, 8);
-            if (sign != "SIRBC1.2") throw new Exception("不是标准的SIRBC1.2文件");
+            if (sign != "SIRBC1.2") {
+                if (sign.StartsWith("SIRBC")) throw new SirException(SirExceptionTypes.VersionMismatch, 0, 0, "不是标准的SIRBC1.2文件");
+                throw new SirException(0, "不是标准的SIRBC1.2文件");
+            }
             int importAddr = 8;
             int importSize = 0;
             int dataAddr = 0;
@@ -413,7 +418,7 @@ namespace Sevm.Sir {
             codeSize = GetInteger(new Span<byte>(sir, codeAddr, 4));
             // 输出调试
             //Console.WriteLine($"importAddr: {importAddr}, importSize: {importSize}, dataAddr: {dataAddr}, dataSize: {dataSize}, defineAddr: {defineAddr}, defineSize: {defineSize}, funcAddr: {funcAddr}, funcSize: {funcSize}, codeAddr: {codeAddr}, codeSize: {codeSize}, all: {sir.Length}");
-            if (codeAddr + 4 + codeSize != sir.Length) throw new Exception("sbc文件已损坏");
+            if (codeAddr + 4 + codeSize != sir.Length) throw new SirException(0, "sbc文件已损坏");
             // 加载所有引入
             int addr = importAddr + 4;
             int offset = 0;
