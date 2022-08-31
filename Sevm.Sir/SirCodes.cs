@@ -12,58 +12,66 @@ namespace Sevm.Sir {
         /// <summary>
         /// 添加指令
         /// </summary>
+        /// <param name="line"></param>
         /// <param name="instruction"></param>
-        public void Add(SirCodeInstructionTypes instruction) {
+        public void Add(int line, SirCodeInstructionTypes instruction) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Exp1 = SirExpression.None,
                 Exp2 = SirExpression.None,
                 Exp3 = SirExpression.None,
+                SourceLine = line,
             });
         }
 
         /// <summary>
         /// 添加指令
         /// </summary>
+        /// <param name="line"></param>
         /// <param name="instruction"></param>
         /// <param name="exp1"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirExpression exp1) {
+        public void Add(int line, SirCodeInstructionTypes instruction, SirExpression exp1) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Exp1 = exp1,
                 Exp2 = SirExpression.None,
                 Exp3 = SirExpression.None,
+                SourceLine = line,
             });
         }
 
         /// <summary>
         /// 添加指令
         /// </summary>
+        /// <param name="line"></param>
         /// <param name="instruction"></param>
         /// <param name="exp1"></param>
         /// <param name="exp2"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirExpression exp1, SirExpression exp2) {
+        public void Add(int line, SirCodeInstructionTypes instruction, SirExpression exp1, SirExpression exp2) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Exp1 = exp1,
                 Exp2 = exp2,
                 Exp3 = SirExpression.None,
+                SourceLine = line,
             });
         }
 
         /// <summary>
         /// 添加指令
         /// </summary>
+        /// <param name="line"></param>
         /// <param name="instruction"></param>
         /// <param name="exp1"></param>
         /// <param name="exp2"></param>
         /// <param name="exp3"></param>
-        public void Add(SirCodeInstructionTypes instruction, SirExpression exp1, SirExpression exp2, SirExpression exp3) {
+        public void Add(int line, SirCodeInstructionTypes instruction, SirExpression exp1, SirExpression exp2, SirExpression exp3) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Exp1 = exp1,
                 Exp2 = exp2,
                 Exp3 = exp3,
+                SourceLine = line,
             });
         }
 

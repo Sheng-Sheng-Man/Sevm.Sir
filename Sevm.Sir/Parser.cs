@@ -243,7 +243,7 @@ namespace Sevm.Sir {
                                                 SirCodeInstructionTypes instructionType = SirCodeInstructionTypes.Label;
                                                 SirExpression exp1 = new SirExpression();
                                                 FillSirCodeParam(exp1, name);
-                                                script.Codes.Add(instructionType, exp1);
+                                                script.Codes.Add(line, instructionType, exp1);
                                             } else {
                                                 SirCodeInstructionTypes instructionType = GetInstructionType(name);
                                                 SirExpression exp1 = new SirExpression();
@@ -266,7 +266,7 @@ namespace Sevm.Sir {
                                                     FillSirCodeParam(exp2, ls[2]);
                                                     FillSirCodeParam(exp3, ls[3]);
                                                 }
-                                                script.Codes.Add(instructionType, exp1, exp2, exp3);
+                                                script.Codes.Add(line, instructionType, exp1, exp2, exp3);
                                             }
                                             break;
                                         default:
@@ -496,7 +496,7 @@ namespace Sevm.Sir {
                 offset++;
                 int exp3Value = GetInteger(new Span<byte>(sir, addr + offset, 4));
                 offset += 4;
-                script.Codes.Add(ins, SirExpression.Create(exp1Type, exp1Value), SirExpression.Create(exp2Type, exp2Value), SirExpression.Create(exp3Type, exp3Value));
+                script.Codes.Add(0, ins, SirExpression.Create(exp1Type, exp1Value), SirExpression.Create(exp2Type, exp2Value), SirExpression.Create(exp3Type, exp3Value));
             }
             return script;
         }
