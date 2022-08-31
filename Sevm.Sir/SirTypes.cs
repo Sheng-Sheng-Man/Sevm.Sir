@@ -198,7 +198,7 @@ namespace Sevm.Sir {
         /// <summary>
         /// 寄存器 #
         /// </summary>
-        Storage = 0x03,
+        Register = 0x03,
         /// <summary>
         /// 变量 $
         /// </summary>

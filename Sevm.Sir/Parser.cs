@@ -104,7 +104,7 @@ namespace Sevm.Sir {
                 param.Type = SirExpressionTypes.Label;
                 param.Content = int.Parse(name.Substring(1));
             } else if (name.StartsWith("#")) {
-                param.Type = SirExpressionTypes.Storage;
+                param.Type = SirExpressionTypes.Register;
                 param.Content = int.Parse(name.Substring(1));
             } else if (name.StartsWith("$")) {
                 param.Type = SirExpressionTypes.Variable;

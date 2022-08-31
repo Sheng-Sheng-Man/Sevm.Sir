@@ -67,7 +67,7 @@ namespace Sevm.Sir {
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static SirExpression Storage(int content) { return new SirExpression() { Type = SirExpressionTypes.Storage, Content = content }; }
+        public static SirExpression Register(int content) { return new SirExpression() { Type = SirExpressionTypes.Register, Content = content }; }
 
         /// <summary>
         /// 获取字符串表示形式
@@ -80,7 +80,7 @@ namespace Sevm.Sir {
                 case SirExpressionTypes.IntPtr: return $"[{this.Content.ToString()}]";
                 case SirExpressionTypes.Label: return $"@{this.Content.ToString()}";
                 case SirExpressionTypes.Variable: return $"${this.Content.ToString()}";
-                case SirExpressionTypes.Storage: return $"#{this.Content.ToString()}";
+                case SirExpressionTypes.Register: return $"#{this.Content.ToString()}";
                 default: throw new Exception($"不支持的参数类型'{this.Type.ToString()}'");
             }
         }

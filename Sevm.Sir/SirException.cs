@@ -31,7 +31,34 @@ namespace Sevm.Sir {
         /// <param name="sourceLine"></param>
         /// <param name="codeLine"></param>
         /// <param name="msg"></param>
+        /// <param name="exception"></param>
+        public SirException(SirExceptionTypes tp, int sourceLine, int codeLine, string msg, Exception exception) : base(msg, exception) {
+            this.Type = tp;
+            SourceLine = sourceLine;
+            CodeLine = codeLine;
+        }
+
+        /// <summary>
+        /// 实例化一个错误信息
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <param name="sourceLine"></param>
+        /// <param name="codeLine"></param>
+        /// <param name="msg"></param>
         public SirException(SirExceptionTypes tp, int sourceLine, int codeLine, string msg) : base(msg) {
+            this.Type = tp;
+            SourceLine = sourceLine;
+            CodeLine = codeLine;
+        }
+
+        /// <summary>
+        /// 实例化一个错误信息
+        /// </summary>
+        /// <param name="tp"></param>
+        /// <param name="sourceLine"></param>
+        /// <param name="codeLine"></param>
+        /// <param name="exception"></param>
+        public SirException(SirExceptionTypes tp, int sourceLine, int codeLine, Exception exception) : base(exception.Message, exception.InnerException) {
             this.Type = tp;
             SourceLine = sourceLine;
             CodeLine = codeLine;
@@ -52,9 +79,32 @@ namespace Sevm.Sir {
         /// <summary>
         /// 实例化一个错误信息
         /// </summary>
+        /// <param name="sourceLine"></param>
+        /// <param name="codeLine"></param>
+        /// <param name="exception"></param>
+        public SirException(int sourceLine, int codeLine, Exception exception) : base(exception.Message, exception.InnerException) {
+            this.Type = SirExceptionTypes.General;
+            SourceLine = sourceLine;
+            CodeLine = codeLine;
+        }
+
+        /// <summary>
+        /// 实例化一个错误信息
+        /// </summary>
         /// <param name="codeLine"></param>
         /// <param name="msg"></param>
         public SirException(int codeLine, string msg) : base(msg) {
+            this.Type = SirExceptionTypes.General;
+            SourceLine = 0;
+            CodeLine = codeLine;
+        }
+
+        /// <summary>
+        /// 实例化一个错误信息
+        /// </summary>
+        /// <param name="codeLine"></param>
+        /// <param name="exception"></param>
+        public SirException(int codeLine, Exception exception) : base(exception.Message, exception.InnerException) {
             this.Type = SirExceptionTypes.General;
             SourceLine = 0;
             CodeLine = codeLine;
