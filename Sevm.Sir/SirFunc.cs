@@ -32,7 +32,7 @@ namespace Sevm.Sir {
             StringBuilder sb = new StringBuilder();
             sb.Append(this.Scope.ToString());
             sb.Append(' ');
-            sb.Append($"@{this.Index}");
+            sb.Append($"${this.Index}");
             sb.Append(' ');
             sb.Append(this.Name);
             return sb.ToString();

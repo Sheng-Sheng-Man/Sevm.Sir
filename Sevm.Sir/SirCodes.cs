@@ -17,9 +17,9 @@ namespace Sevm.Sir {
         public void Add(int line, SirCodeInstructionTypes instruction) {
             this.Add(new SirCode() {
                 Instruction = instruction,
-                Exp1 = SirExpression.None,
-                Exp2 = SirExpression.None,
-                Exp3 = SirExpression.None,
+                Exp1 = -1,
+                Exp2 = -1,
+                Exp3 = -1,
                 SourceLine = line,
             });
         }
@@ -30,12 +30,12 @@ namespace Sevm.Sir {
         /// <param name="line"></param>
         /// <param name="instruction"></param>
         /// <param name="exp1"></param>
-        public void Add(int line, SirCodeInstructionTypes instruction, SirExpression exp1) {
+        public void Add(int line, SirCodeInstructionTypes instruction, int exp1) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Exp1 = exp1,
-                Exp2 = SirExpression.None,
-                Exp3 = SirExpression.None,
+                Exp2 = -1,
+                Exp3 = -1,
                 SourceLine = line,
             });
         }
@@ -47,12 +47,12 @@ namespace Sevm.Sir {
         /// <param name="instruction"></param>
         /// <param name="exp1"></param>
         /// <param name="exp2"></param>
-        public void Add(int line, SirCodeInstructionTypes instruction, SirExpression exp1, SirExpression exp2) {
+        public void Add(int line, SirCodeInstructionTypes instruction, int exp1, int exp2) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Exp1 = exp1,
                 Exp2 = exp2,
-                Exp3 = SirExpression.None,
+                Exp3 = -1,
                 SourceLine = line,
             });
         }
@@ -65,7 +65,7 @@ namespace Sevm.Sir {
         /// <param name="exp1"></param>
         /// <param name="exp2"></param>
         /// <param name="exp3"></param>
-        public void Add(int line, SirCodeInstructionTypes instruction, SirExpression exp1, SirExpression exp2, SirExpression exp3) {
+        public void Add(int line, SirCodeInstructionTypes instruction, int exp1, int exp2, int exp3) {
             this.Add(new SirCode() {
                 Instruction = instruction,
                 Exp1 = exp1,

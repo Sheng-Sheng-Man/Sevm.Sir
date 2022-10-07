@@ -3,12 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>disable</Nullable>
-    <Version>1.1.2209.19</Version>
+    <Version>1.2.2210.24</Version>
     <ApplicationIcon>script.ico</ApplicationIcon>
     <PackageIcon>script.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>一种服务于脚本执行的可二进制化指令语言</Description>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Authors>Uncle Zheng</Authors>
   </PropertyGroup>
 
   <ItemGroup>

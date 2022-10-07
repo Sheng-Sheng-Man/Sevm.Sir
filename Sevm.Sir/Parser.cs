@@ -86,8 +86,19 @@ namespace Sevm.Sir {
                 case "jmpf": return SirCodeInstructionTypes.Jmpf;
                 case "call": return SirCodeInstructionTypes.Call;
                 case "ret": return SirCodeInstructionTypes.Ret;
+                case "label": return SirCodeInstructionTypes.Label;
                 default: return SirCodeInstructionTypes.None;
             }
+        }
+
+        /// <summary>
+        /// 获取指令类型
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static int GetSirCodeParam(string name) {
+            if (!name.StartsWith("$")) throw new SirException(0, $"不支持的参数定义'{name}'");
+            return int.Parse(name.Substring(1));
         }
 
         /// <summary>
@@ -225,7 +236,7 @@ namespace Sevm.Sir {
                                             break;
                                         case SirParserTypes.Func:
                                             if (ls.Count < 3) throw new SirException(line, 0, $"{tp.ToString()}段定义关键字数量不足");
-                                            if (!ls[1].StartsWith("@")) throw new SirException(line, 0, $"不符合规范的'{ls[1]}'标签定义");
+                                            if (!ls[1].StartsWith("$")) throw new SirException(line, 0, $"不符合规范的'{ls[1]}'标签定义");
                                             sirScope = SirScopeTypes.Private;
                                             if (name == "private") {
                                                 sirScope = SirScopeTypes.Private;
@@ -239,35 +250,28 @@ namespace Sevm.Sir {
                                             script.Funcs.Add(sirScope, index, funName);
                                             break;
                                         case SirParserTypes.Code:
-                                            if (name.StartsWith("@")) {
-                                                SirCodeInstructionTypes instructionType = SirCodeInstructionTypes.Label;
-                                                SirExpression exp1 = new SirExpression();
-                                                FillSirCodeParam(exp1, name);
-                                                script.Codes.Add(line, instructionType, exp1);
+                                            SirCodeInstructionTypes instructionType = GetInstructionType(name);
+                                            int exp1;
+                                            int exp2;
+                                            int exp3;
+                                            if (ls.Count < 2) {
+                                                exp1 = -1;
+                                                exp2 = -1;
+                                                exp3 = -1;
+                                            } else if (ls.Count < 3) {
+                                                exp1 = GetSirCodeParam(ls[1]);
+                                                exp2 = -1;
+                                                exp3 = -1;
+                                            } else if (ls.Count < 4) {
+                                                exp1 = GetSirCodeParam(ls[1]);
+                                                exp2 = GetSirCodeParam(ls[2]);
+                                                exp3 = -1;
                                             } else {
-                                                SirCodeInstructionTypes instructionType = GetInstructionType(name);
-                                                SirExpression exp1 = new SirExpression();
-                                                SirExpression exp2 = new SirExpression();
-                                                SirExpression exp3 = new SirExpression();
-                                                if (ls.Count < 2) {
-                                                    exp1.Type = SirExpressionTypes.None;
-                                                    exp2.Type = SirExpressionTypes.None;
-                                                    exp3.Type = SirExpressionTypes.None;
-                                                } else if (ls.Count < 3) {
-                                                    FillSirCodeParam(exp1, ls[1]);
-                                                    exp2.Type = SirExpressionTypes.None;
-                                                    exp3.Type = SirExpressionTypes.None;
-                                                } else if (ls.Count < 4) {
-                                                    FillSirCodeParam(exp1, ls[1]);
-                                                    FillSirCodeParam(exp2, ls[2]);
-                                                    exp3.Type = SirExpressionTypes.None;
-                                                } else {
-                                                    FillSirCodeParam(exp1, ls[1]);
-                                                    FillSirCodeParam(exp2, ls[2]);
-                                                    FillSirCodeParam(exp3, ls[3]);
-                                                }
-                                                script.Codes.Add(line, instructionType, exp1, exp2, exp3);
+                                                exp1 = GetSirCodeParam(ls[1]);
+                                                exp2 = GetSirCodeParam(ls[2]);
+                                                exp3 = GetSirCodeParam(ls[3]);
                                             }
+                                            script.Codes.Add(line, instructionType, exp1, exp2, exp3);
                                             break;
                                         default:
                                             throw new SirException(line, 0, $"不支持的'{tp.ToString()}'段类型");
@@ -487,16 +491,31 @@ namespace Sevm.Sir {
                 SirExpressionTypes exp1Type = (SirExpressionTypes)sir[addr + offset];
                 offset++;
                 int exp1Value = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                if (exp1Type == SirExpressionTypes.None) {
+                    exp1Value = -1;
+                } else {
+                    if (exp1Type != SirExpressionTypes.Variable) throw new SirException(0, $"不支持的参数类型'{exp1Type}'");
+                }
                 offset += 4;
                 SirExpressionTypes exp2Type = (SirExpressionTypes)sir[addr + offset];
                 offset++;
                 int exp2Value = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                if (exp2Type == SirExpressionTypes.None) {
+                    exp2Value = -1;
+                } else {
+                    if (exp2Type != SirExpressionTypes.Variable) throw new SirException(0, $"不支持的参数类型'{exp2Type}'");
+                }
                 offset += 4;
                 SirExpressionTypes exp3Type = (SirExpressionTypes)sir[addr + offset];
                 offset++;
                 int exp3Value = GetInteger(new Span<byte>(sir, addr + offset, 4));
+                if (exp3Type == SirExpressionTypes.None) {
+                    exp3Value = -1;
+                } else {
+                    if (exp3Type != SirExpressionTypes.Variable) throw new SirException(0, $"不支持的参数类型'{exp3Type}'");
+                }
                 offset += 4;
-                script.Codes.Add(0, ins, SirExpression.Create(exp1Type, exp1Value), SirExpression.Create(exp2Type, exp2Value), SirExpression.Create(exp3Type, exp3Value));
+                script.Codes.Add(0, ins, exp1Value, exp2Value, exp3Value);
             }
             return script;
         }
